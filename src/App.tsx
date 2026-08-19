@@ -1,8 +1,8 @@
-import Boundary from 'pages/Boundary';
 import Body from 'layout/Cotainer';
-import UserProfile from 'pages/UserProfile';
+import Boundary from 'pages/Boundary';
 import Home from 'pages/Home';
 import MyProfile from 'pages/MyProfile';
+import UserProfile from 'pages/UserProfile';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 // eslint-disable-next-line arrow-body-style
