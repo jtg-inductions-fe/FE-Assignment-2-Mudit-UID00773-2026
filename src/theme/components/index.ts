@@ -7,8 +7,6 @@ import PoppinsBoldWOFF2 from '@assets/fonts/poppins/poppins-bold-webfont.woff2';
 import PoppinsLightWOFF2 from '@assets/fonts/poppins/poppins-light-webfont.woff2';
 import PoppinsRegularWOFF2 from '@assets/fonts/poppins/poppins-regular-webfont.woff2';
 
-
-
 // TODO: Add necessary font face declarations here
 const fontFaceDeclarations = `
        @font-face {

@@ -26,10 +26,10 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
     fontFamily: "'Poppins', 'Inter'",
     htmlFontSize: HTML_FONT_SIZE,
 
-    fontWeightLight: 300,   
-    fontWeightRegular: 400, 
-    fontWeightMedium: 500,  
-    fontWeightBold: 700, 
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
 
     h1: {
         fontSize: typographyUtil.pxToRem(30),
@@ -41,7 +41,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
             lineHeight: typographyUtil.pxToRem(68),
         },
     },
-    h2:{
+    h2: {
         fontSize: typographyUtil.pxToRem(24),
         fontWeight: 400,
         lineHeight: typographyUtil.pxToRem(28),
@@ -50,7 +50,7 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
             fontSize: typographyUtil.pxToRem(32),
             lineHeight: typographyUtil.pxToRem(36),
         },
-    }
+    },
 });
 
 export const typography = { typographyStyle, typographyUtil };

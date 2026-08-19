@@ -1,16 +1,15 @@
-import Boundary from 'components/Boundary';
-import Body from 'components/Cotainer';
-import Home from 'components/Home';
-import MyProfile from 'components/MyProfile';
-import UserProfile from 'components/UserProfile';
+import Boundary from 'pages/Boundary';
+import Body from 'layout/Cotainer';
+import UserProfile from 'pages/UserProfile';
+import Home from 'pages/Home';
+import MyProfile from 'pages/MyProfile';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 // eslint-disable-next-line arrow-body-style
 const App = () => {
     return (
         <Routes>
-
-            <Route path='/' element={<Navigate to="/user"/>} />
+            <Route path="/" element={<Navigate to="/user" />} />
 
             <Route element={<Body />}>
                 <Route path="user">
