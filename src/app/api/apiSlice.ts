@@ -5,6 +5,5 @@ export const apiSlice = createApi({
         baseUrl: 'example.com',
     }),
     tagTypes: ['User', 'Profile'],
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    endpoints: (builder) => ({}),
+    endpoints: () => ({}),
 });
