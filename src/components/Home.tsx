@@ -1,12 +1,12 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
-// eslint-disable-next-line arrow-body-style
-const Home = () => {
-    return (
+const Home = () => (
         <div>
             <Button variant="contained">Home page</Button>
+            <Typography variant='h1'>SOME RANDOM CONTENT</Typography>
+            <Typography variant='h2'>Some More Random Content</Typography>
+
         </div>
     );
-};
 
 export default Home;
