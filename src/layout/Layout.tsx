@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 // eslint-disable-next-line arrow-body-style
-const Body = () => {
+const Layout = () => {
     return (
         <>
             <header>
@@ -15,4 +15,4 @@ const Body = () => {
     );
 };
 
-export default Body;
+export default Layout;

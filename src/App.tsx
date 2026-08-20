@@ -1,4 +1,4 @@
-import Body from 'layout/Cotainer';
+import Layout from 'layout/Layout';
 import Boundary from 'pages/Boundary';
 import Home from 'pages/Home';
 import MyProfile from 'pages/MyProfile';
@@ -11,7 +11,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Navigate to="/user" />} />
 
-            <Route element={<Body />}>
+            <Route element={<Layout />}>
                 <Route path="user">
                     <Route index element={<Home />} />
                     <Route path=":id" element={<UserProfile />} />
