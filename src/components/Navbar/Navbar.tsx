@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, Toolbar } from '@mui/material';
 
 import Logo from '@assets/images/Logo.svg';
+import { DropDown } from '@components';
 
 import { LogoImage, MyAppBar, NavItemContainer } from './Navbar.styles';
-import DropDown from '../DropDown/DropDown';
 
 const Navbar = () => {
     const navigate = useNavigate();
