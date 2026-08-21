@@ -7,7 +7,8 @@
             "@theme": ["theme/index"],
             "@pages": ["pages/index"],
             "@layouts": ["layouts/index"],
-            "@app/*": ["app/*"]
+            "@app/*": ["app/*"],
+            "@components": ["components/index"]
         }
     }
 }
