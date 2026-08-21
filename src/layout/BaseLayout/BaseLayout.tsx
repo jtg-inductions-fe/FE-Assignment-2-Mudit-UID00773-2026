@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 const BaseLayout = () => (
     <>
@@ -8,9 +8,11 @@ const BaseLayout = () => (
             <Box component="nav">Header</Box>
         </Box>
 
-        <Box>
-            <Outlet />
-        </Box>
+        <Container>
+            <Box>
+                <Outlet />
+            </Box>
+        </Container>
     </>
 );
 
