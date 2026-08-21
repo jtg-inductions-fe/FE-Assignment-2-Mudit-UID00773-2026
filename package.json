@@ -13,8 +13,7 @@
         "preview": "vite preview",
         "prettier": "npx prettier --write ./",
         "postinstall": "husky install",
-        "pre-commit": "lint-staged",
-        "test": ""
+        "prepare": "husky"
     },
     "dependencies": {
         "@emotion/react": "11.14.0",

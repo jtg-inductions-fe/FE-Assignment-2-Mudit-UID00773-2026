@@ -38,7 +38,7 @@ const fontFaceDeclarations = `
         font-display: swap; 
         font-family: 'Poppins';
         font-style: normal;
-        font-weight: 900;
+        font-weight: 700;
         src: url(${PoppinsBoldWOFF2}) format('woff2');
       };
       

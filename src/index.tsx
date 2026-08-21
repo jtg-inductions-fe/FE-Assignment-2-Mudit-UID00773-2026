@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client';
 import App from 'App';
 import { store } from 'app/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
@@ -17,9 +16,7 @@ createRoot(rootElement).render(
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Provider store={store}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+                <App />
             </Provider>
         </ThemeProvider>
     </StrictMode>,
