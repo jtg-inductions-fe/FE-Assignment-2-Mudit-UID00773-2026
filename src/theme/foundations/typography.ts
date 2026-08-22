@@ -23,12 +23,13 @@ const typographyUtil: TypographyUtils = {
  * @returns The function returns a TypographyOptions object, which includes various typography settings,
  */
 const typographyStyle = (theme: Theme): TypographyOptions => ({
-    fontFamily: 'Inter',
+    fontFamily: "'Poppins', 'Inter'",
     htmlFontSize: HTML_FONT_SIZE,
 
-    fontWeightLight: 400,
-    fontWeightRegular: 500,
-    fontWeightMedium: 600,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
 
     h1: {
         fontSize: typographyUtil.pxToRem(30),
@@ -36,8 +37,18 @@ const typographyStyle = (theme: Theme): TypographyOptions => ({
         lineHeight: typographyUtil.pxToRem(45),
 
         [theme.breakpoints.up('md')]: {
-            fontSize: typographyUtil.pxToRem(48),
-            lineHeight: typographyUtil.pxToRem(62.5),
+            fontSize: typographyUtil.pxToRem(64),
+            lineHeight: typographyUtil.pxToRem(68),
+        },
+    },
+    h2: {
+        fontSize: typographyUtil.pxToRem(24),
+        fontWeight: 400,
+        lineHeight: typographyUtil.pxToRem(28),
+
+        [theme.breakpoints.up('md')]: {
+            fontSize: typographyUtil.pxToRem(32),
+            lineHeight: typographyUtil.pxToRem(36),
         },
     },
 });
