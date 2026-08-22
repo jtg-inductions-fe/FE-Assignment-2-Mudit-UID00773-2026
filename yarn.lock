@@ -285,7 +285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:11.14.0":
+"@emotion/react@npm:^11.14.0":
   version: 11.14.0
   resolution: "@emotion/react@npm:11.14.0"
   dependencies:
@@ -326,7 +326,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:11.14.0":
+"@emotion/styled@npm:^11.14.0":
   version: 11.14.0
   resolution: "@emotion/styled@npm:11.14.0"
   dependencies:
@@ -927,7 +927,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/material@npm:6.4.1":
+"@mui/material@npm:^6.4.1":
   version: 6.4.1
   resolution: "@mui/material@npm:6.4.1"
   dependencies:
@@ -4047,10 +4047,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-mui-base-template@workspace:."
   dependencies:
-    "@emotion/react": "npm:11.14.0"
-    "@emotion/styled": "npm:11.14.0"
+    "@emotion/react": "npm:^11.14.0"
+    "@emotion/styled": "npm:^11.14.0"
     "@mui/icons-material": "npm:6.4.1"
-    "@mui/material": "npm:6.4.1"
+    "@mui/material": "npm:^6.4.1"
     "@reduxjs/toolkit": "npm:^2.12.0"
     "@types/eslint-plugin-jsx-a11y": "npm:6"
     "@types/node": "npm:22.10.7"
