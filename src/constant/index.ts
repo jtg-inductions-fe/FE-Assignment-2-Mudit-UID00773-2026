@@ -4,3 +4,5 @@ export {
     SCALING_FACTOR,
     BREAKPOINTS,
 } from './themeConstant';
+
+export { PATHS } from './routesConstants';

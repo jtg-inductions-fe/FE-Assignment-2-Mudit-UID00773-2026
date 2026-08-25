@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { PATHS } from '@constant';
 import { BaseLayout } from '@layout';
 import {
     ErrorBoundaryPage,
@@ -15,22 +16,22 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundaryPage />,
         children: [
             {
-                index: true,
+                path: PATHS.HOME,
                 element: <Home />,
             },
             {
-                path: 'user/:id',
+                path: PATHS.USERPROFILE,
                 element: <UserProfile />,
             },
             {
-                path: 'profile',
+                path: PATHS.MYPROFILE,
                 element: <MyProfile />,
             },
+            {
+                path: '*',
+                element: <NotFound />,
+            },
         ],
-    },
-    {
-        path: '*',
-        element: <NotFound />,
     },
 ]);
 
