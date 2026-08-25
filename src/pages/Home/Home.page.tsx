@@ -1,10 +1,10 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 
-import { useGetUsersQuery } from 'app/api/userApiSlice';
 import { useSearchParams } from 'react-router-dom';
 
 import { Box, Button, debounce, Typography } from '@mui/material';
 
+import { useGetUsersQuery } from '@app/api/user/userApiSlice';
 import { UserCard } from '@components';
 
 import {
@@ -69,6 +69,7 @@ const Home = () => {
                 </Box>
                 <SearchBox
                     hiddenLabel
+                    autoComplete="off"
                     variant="outlined"
                     value={searchContent}
                     onChange={handleSearchChange}

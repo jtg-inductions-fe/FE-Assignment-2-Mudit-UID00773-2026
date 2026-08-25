@@ -1,7 +1,8 @@
-import { ISearchUser } from 'app/api/userApiSlice.types';
 import { Link } from 'react-router-dom';
 
 import { Avatar, Box, Typography } from '@mui/material';
+
+import { ISearchUser } from '@app/api/user/userApiSlice.types';
 
 import { UserCardContainer } from './UserCard.styles';
 

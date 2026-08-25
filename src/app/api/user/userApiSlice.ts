@@ -1,7 +1,7 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
-import { apiSlice } from './apiSlice';
 import { ISearchUser } from './userApiSlice.types';
+import { apiSlice } from '../base/apiSlice';
 
 const searchUsersAdaptor = createEntityAdapter();
 
