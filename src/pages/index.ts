@@ -1,5 +1,5 @@
-export { default as Home } from './Home/Home';
-export { default as MyProfile } from './MyProfile/MyProfile';
-export { default as NotFound } from './NotFound/NotFound';
-export { default as UserProfile } from './UserProfile/UserProfile';
-export { default as ErrorBoundaryPage } from './ErrorBoundaryPage/ErrorBoundaryPage';
+export { ErrorBoundary } from './ErrorBoundary';
+export { Home } from './Home';
+export { MyProfile } from './MyProfile';
+export { NotFound } from './NotFound';
+export { UserProfile } from './UserProfile';

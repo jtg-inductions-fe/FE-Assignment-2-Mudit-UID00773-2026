@@ -8,7 +8,7 @@ const BaseLayout = () => (
             <Box component="nav">Header</Box>
         </Box>
 
-        <Container>
+        <Container maxWidth="xl">
             <Box>
                 <Outlet />
             </Box>

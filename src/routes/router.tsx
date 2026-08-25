@@ -1,19 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { PATHS } from '@constant';
-import { BaseLayout } from '@layout';
-import {
-    ErrorBoundaryPage,
-    Home,
-    MyProfile,
-    NotFound,
-    UserProfile,
-} from '@pages';
+import { BaseLayout } from '@layouts';
+import { ErrorBoundary, Home, MyProfile, NotFound, UserProfile } from '@pages';
 
 const router = createBrowserRouter([
     {
         element: <BaseLayout />,
-        errorElement: <ErrorBoundaryPage />,
+        errorElement: <ErrorBoundary />,
         children: [
             {
                 path: PATHS.HOME,

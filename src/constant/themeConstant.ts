@@ -33,5 +33,5 @@ export const BREAKPOINTS = {
     SM: 600,
     MD: 900,
     LG: 1200,
-    XL: 1536,
+    XL: 1920,
 };

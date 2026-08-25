@@ -6,7 +6,7 @@
             "@constant": ["constant/index"],
             "@theme": ["theme/index"],
             "@pages": ["pages/index"],
-            "@layout": ["layout/index"],
+            "@layouts": ["layouts/index"],
             "@app/*": ["app/*"]
         }
     }

@@ -2,35 +2,38 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, Typography } from '@mui/material';
 
-import { AlertBox } from './NotFound.styles';
+import { ErrorBox, ErrorImage } from './ErrorCard.styles';
 
-const NotFound = () => {
+const ErrorCard = ({
+    heading,
+    message,
+    imgPath,
+}: {
+    heading: string;
+    message: string;
+    imgPath: string;
+}) => {
     const navigate = useNavigate();
-
     return (
-        <AlertBox>
-            <Typography
-                variant="h4"
-                color="error"
-                gutterBottom
-                sx={{ fontWeight: 'bold' }}
-            >
-                Page Not Found
+        <ErrorBox>
+            <ErrorImage src={imgPath} alt="Error" />
+            <Typography variant="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
+                {heading}
             </Typography>
             <Typography
                 variant="body1"
                 color="text.secondary"
                 sx={{ mb: 4, maxWidth: 500 }}
             >
-                Could not Find the page you were looking for
+                {message}
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
                 <Button variant="contained" onClick={() => void navigate('/')}>
                     Go to Home
                 </Button>
             </Box>
-        </AlertBox>
+        </ErrorBox>
     );
 };
 
-export default NotFound;
+export default ErrorCard;
