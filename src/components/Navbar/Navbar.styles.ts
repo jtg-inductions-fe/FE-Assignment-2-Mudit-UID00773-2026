@@ -25,4 +25,4 @@ export const LogoImage = styled('img')(({ theme }) => ({
 export const NavItemContainer = styled(Box)(() => ({
     display: 'flex',
     alignItems: 'stretch',
-}));
+})) as typeof Box;

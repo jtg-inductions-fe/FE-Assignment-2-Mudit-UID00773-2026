@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { Avatar, Button, Toolbar } from '@mui/material';
 
@@ -14,10 +15,6 @@ const Navbar = () => {
 
     const [isLoggedIn, setIsLoggenIn] = useState<boolean>(false);
 
-    const handleLogoClicked = (): void => {
-        void navigate('/');
-    };
-
     const menuOptions = [
         { label: 'View Profile', onClick: () => void navigate('/profile') },
         { label: 'Logout', onClick: () => setIsLoggenIn(false) },
@@ -26,7 +23,7 @@ const Navbar = () => {
     return (
         <MyAppBar position="fixed" elevation={10}>
             <Toolbar>
-                <NavItemContainer onClick={handleLogoClicked} flex={1}>
+                <NavItemContainer component={RouterLink} to="/" flex={1}>
                     <LogoImage src={Logo} alt="GITFETCH" />
                 </NavItemContainer>
 

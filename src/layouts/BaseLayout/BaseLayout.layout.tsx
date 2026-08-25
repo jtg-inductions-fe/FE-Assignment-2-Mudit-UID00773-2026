@@ -6,14 +6,9 @@ import { Navbar } from '@components';
 
 const BaseLayout = () => (
     <>
-        <Box component="header">
-            <Box component="nav">
-                <Navbar />
-            </Box>
-        </Box>
-
+        <Navbar />
         <Container maxWidth="xl">
-            <Box>
+            <Box component="main">
                 <Outlet />
             </Box>
         </Container>
