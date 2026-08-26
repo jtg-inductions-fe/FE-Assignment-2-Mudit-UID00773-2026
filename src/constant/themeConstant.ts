@@ -4,7 +4,15 @@
  */
 export const COLORS = {
     PRIMARY: {
-        MAIN: '#0E9F6E',
+        MAIN: '#5DD62C',
+        DARK: '#337418',
+    },
+    DARK: {
+        MAIN: '#202020',
+        DARKER: '#0F0F0F',
+    },
+    LIGHT: {
+        MAIN: '#F8F8F8',
     },
 };
 
@@ -19,3 +27,11 @@ export const HTML_FONT_SIZE = 10;
  * @constant
  */
 export const SCALING_FACTOR = 4;
+
+export const BREAKPOINTS = {
+    XS: 0,
+    SM: 600,
+    MD: 900,
+    LG: 1200,
+    XL: 1920,
+};
