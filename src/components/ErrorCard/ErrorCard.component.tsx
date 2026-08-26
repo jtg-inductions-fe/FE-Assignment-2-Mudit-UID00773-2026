@@ -27,7 +27,7 @@ const ErrorCard = ({
             >
                 {message}
             </Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            <Box display="flex" gap="2">
                 <Button variant="contained" onClick={() => void navigate('/')}>
                     Go to Home
                 </Button>

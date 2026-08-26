@@ -11,9 +11,9 @@ export const ErrorBox = styled(Box)(() => ({
     marginTop: '10vh',
 }));
 
-export const ErrorImage = styled('img')(({ theme }) => ({
-    width: theme.spacing(160),
-    height: theme.spacing(80),
+export const ErrorImage = styled('img')(({ theme: { spacing } }) => ({
+    width: spacing(160),
+    height: spacing(80),
     objectFit: 'cover',
     objectPosition: 'center',
     marginBottom: '24px',

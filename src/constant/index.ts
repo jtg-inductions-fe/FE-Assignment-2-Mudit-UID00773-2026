@@ -5,4 +5,4 @@ export {
     BREAKPOINTS,
 } from './themeConstant';
 
-export { PATHS } from './routesConstants';
+export { ROUTES } from './routesConstants';

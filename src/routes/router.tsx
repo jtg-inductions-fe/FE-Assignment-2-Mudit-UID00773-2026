@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { PATHS } from '@constant';
+import { ROUTES } from '@constant';
 import { BaseLayout } from '@layouts';
 import { ErrorBoundary, Home, MyProfile, NotFound, UserProfile } from '@pages';
 
@@ -10,19 +10,19 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
         children: [
             {
-                path: PATHS.HOME,
+                path: ROUTES.HOME,
                 element: <Home />,
             },
             {
-                path: PATHS.USERPROFILE,
+                path: ROUTES.USER_PROFILE,
                 element: <UserProfile />,
             },
             {
-                path: PATHS.MYPROFILE,
+                path: ROUTES.MY_PROFILE,
                 element: <MyProfile />,
             },
             {
-                path: '*',
+                path: ROUTES.NOT_FOUND,
                 element: <NotFound />,
             },
         ],

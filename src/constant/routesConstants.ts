@@ -1,5 +1,6 @@
-export const PATHS = {
+export const ROUTES = {
     HOME: '/',
-    USERPROFILE: 'user/:id',
-    MYPROFILE: 'profile',
+    USER_PROFILE: 'user/:id',
+    MY_PROFILE: 'profile',
+    NOT_FOUND: '*',
 };
