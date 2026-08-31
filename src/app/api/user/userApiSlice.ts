@@ -17,8 +17,8 @@ export const searchUserApiSlice = apiSlice.injectEndpoints({
             },
         }),
         getUserInfo: builder.query<IUser, string>({
-            query: (userId: string) => ({
-                url: `/users/${userId}`,
+            query: (username: string) => ({
+                url: `/users/${username}`,
             }),
         }),
     }),

@@ -1,6 +1,7 @@
 import {
     Box,
     BoxProps,
+    Divider,
     Paper,
     PaperProps,
     Stack,
@@ -55,5 +56,11 @@ export const UserProfileImage = styled('img')(({ theme }) => ({
     objectPosition: 'center',
     [theme.breakpoints.down('sm')]: {
         margin: '0 auto',
+    },
+}));
+
+export const ProfileDivider = styled(Divider)(({ theme }) => ({
+    [theme.breakpoints.down('sm')]: {
+        display: 'none',
     },
 }));

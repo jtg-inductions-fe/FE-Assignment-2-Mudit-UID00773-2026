@@ -40,7 +40,7 @@ export interface IUser {
     received_events_url: string;
     type: string;
     user_view_type: string;
-    site_admin: false;
+    site_admin: boolean;
     name: string;
     company: string | null;
     blog: string | null;
