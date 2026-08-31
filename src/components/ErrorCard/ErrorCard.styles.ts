@@ -16,5 +16,5 @@ export const ErrorImage = styled('img')(({ theme: { spacing } }) => ({
     height: spacing(80),
     objectFit: 'cover',
     objectPosition: 'center',
-    marginBottom: '24px',
+    marginBottom: theme.typography.pxToRem(24),
 }));

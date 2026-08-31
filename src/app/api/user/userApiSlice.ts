@@ -1,7 +1,7 @@
 import { IUserInfo } from '@components';
 import { ENDPOINTS } from '@constant';
 
-import { ISearchUser } from './userApiSlice.types';
+import { ISearchUser, IUser } from './userApiSlice.types';
 import { transformUserData } from './userApiSlice.utils';
 import { apiSlice } from '../base/apiSlice';
 
@@ -16,8 +16,13 @@ export const searchUserApiSlice = apiSlice.injectEndpoints({
                 return transformUserData(loadedUsers);
             },
         }),
+        getUserInfo: builder.query<IUser, string>({
+            query: (userId: string) => ({
+                url: `/users/${userId}`,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetUsersQuery } = searchUserApiSlice;
+export const { useGetUsersQuery, useGetUserInfoQuery } = searchUserApiSlice;

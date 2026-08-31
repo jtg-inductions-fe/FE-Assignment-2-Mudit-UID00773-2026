@@ -1,14 +1,14 @@
 import { Box, BoxProps, styled } from '@mui/material';
 
 export const UserCardContainer = styled(Box)<BoxProps>(
-    ({ theme: { spacing, palette } }) => ({
+    ({ theme: { spacing, palette, typography } }) => ({
         width: spacing(200),
-        backgroundColor: palette.grey[200],
+        background: palette.grey[200],
         color: palette.secondary.main,
-        padding: '12px',
+        padding: typography.pxToRem(12),
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
-        borderBottom: `1px solid ${palette.secondary.main}`,
+        gap: typography.pxToRem(24),
+        borderBottom: `${typography.pxToRem(1)} solid ${palette.secondary.main}`,
     }),
 );
