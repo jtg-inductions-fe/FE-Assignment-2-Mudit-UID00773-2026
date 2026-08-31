@@ -12,7 +12,6 @@ import {
     Box,
     Button,
     CircularProgress,
-    Divider,
     Stack,
     Typography,
     useTheme,
@@ -22,6 +21,7 @@ import { useGetUserInfoQuery } from '@app/api/user/userApiSlice';
 import { UserProfileContent, UserProfileInfoCard } from '@components';
 
 import {
+    ProfileDivider,
     UserProfileCard,
     UserProfileContainer,
     UserProfileHeading,
@@ -71,7 +71,7 @@ const UserProfile = () => {
                                     View on GitHub
                                 </Button>
                             </UserProfileSection>
-                            <Divider
+                            <ProfileDivider
                                 orientation="vertical"
                                 variant="middle"
                                 flexItem
