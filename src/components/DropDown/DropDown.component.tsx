@@ -1,21 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 
 import { ProfileDropdownItem } from './DropDown.styles';
+import { DropDownProps } from './DropDown.types';
 
-interface DropDownItem {
-    label: string;
-    onClick: () => void;
-}
-
-interface DropDownProps {
-    items: DropDownItem[];
-    children: React.ReactNode;
-}
-
-const DropDown: React.FC<DropDownProps> = ({ items, children }) => {
+const DropDown = ({ items, children }: DropDownProps) => {
     const id = React.useId();
     const buttonId = `${id}-button`;
     const menuId = `${id}-menu`;
@@ -32,7 +24,7 @@ const DropDown: React.FC<DropDownProps> = ({ items, children }) => {
     };
 
     return (
-        <div>
+        <Box>
             <Button
                 id={buttonId}
                 aria-controls={open ? menuId : undefined}
@@ -71,7 +63,7 @@ const DropDown: React.FC<DropDownProps> = ({ items, children }) => {
                     </ProfileDropdownItem>
                 ))}
             </Menu>
-        </div>
+        </Box>
     );
 };
 
