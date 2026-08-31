@@ -120,7 +120,7 @@ const UserProfile = () => {
                                     <UserProfileContent
                                         icon={CalendarMonthIcon}
                                         content={
-                                            user?.created_at.split('T')[0] ||
+                                            user?.created_at?.split('T')[0] ||
                                             'No data available'
                                         }
                                     />
