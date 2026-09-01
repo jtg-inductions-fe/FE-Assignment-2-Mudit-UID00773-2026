@@ -14,10 +14,10 @@ describe('Navbar Component', () => {
             </MemoryRouter>,
         );
 
-        const logo = screen.getByAltText(/GITFETCH/i) as HTMLImageElement;
+        const logo = screen.getByAltText(/GITFETCH/i);
         const button = screen.getByRole('button', {
             name: /login/i,
-        }) as HTMLButtonElement;
+        });
 
         expect(logo).toBeInTheDocument();
         expect(button).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('Navbar Component', () => {
 
         const loginButton = screen.getByRole('button', {
             name: /login/i,
-        }) as HTMLButtonElement;
+        });
 
         await userEvent.click(loginButton);
 
