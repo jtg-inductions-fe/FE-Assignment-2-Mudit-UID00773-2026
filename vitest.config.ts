@@ -9,7 +9,6 @@ export default defineConfig({
     plugins: [react(), tsconfigPaths()],
     resolve: {
         alias: {
-            // 👈 Map the exact keys from your tsconfig paths directly to src/ folders
             '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
             '@components': fileURLToPath(
                 new URL('./src/components', import.meta.url),
