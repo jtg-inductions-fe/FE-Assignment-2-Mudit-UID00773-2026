@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Avatar, Button, Toolbar } from '@mui/material';
+import { Avatar, Box, Button, Toolbar } from '@mui/material';
 
 import Logo from '@assets/images/Logo.svg';
 import { DropDown } from '@components';
@@ -23,9 +23,11 @@ const Navbar = () => {
     return (
         <MyAppBar position="fixed" elevation={10}>
             <Toolbar>
-                <NavItemContainer component={RouterLink} to="/" flex={1}>
-                    <LogoImage src={Logo} alt="GITFETCH" />
-                </NavItemContainer>
+                <Box flex={1}>
+                    <NavItemContainer component={RouterLink} to="/">
+                        <LogoImage src={Logo} alt="GITFETCH" />
+                    </NavItemContainer>
+                </Box>
 
                 <NavItemContainer>
                     {isLoggedIn ? (

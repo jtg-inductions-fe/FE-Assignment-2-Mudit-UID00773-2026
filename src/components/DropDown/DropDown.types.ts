@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface DropDownItem {
     label: string;
     onClick: () => void;
@@ -5,5 +7,5 @@ export interface DropDownItem {
 
 export interface DropDownProps {
     items: DropDownItem[];
-    children: React.ReactNode;
+    children: ReactNode;
 }
