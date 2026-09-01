@@ -1,6 +1,6 @@
 import { Box, styled, TextField } from '@mui/material';
 
-export const HomeContainer = styled(Box)(({ theme }) => ({
+export const HomeContainer = styled(Box)(({ theme: { breakpoints } }) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -8,42 +8,46 @@ export const HomeContainer = styled(Box)(({ theme }) => ({
     marginTop: '30vh',
     textAlign: 'center',
 
-    [theme.breakpoints.down('md')]: {
+    [breakpoints.down('md')]: {
         marginTop: '20vh',
     },
 }));
 
-export const SearchBoxContainer = styled(Box)(({ theme }) => ({
-    marginTop: theme.spacing(12),
+export const SearchBoxContainer = styled(Box)(({ theme: { spacing } }) => ({
+    marginTop: spacing(12),
     position: 'relative',
 })) as typeof Box;
 
-export const SearchBox = styled(TextField)(({ theme }) => ({
-    width: theme.spacing(160),
-    textAlign: 'center',
+export const SearchBox = styled(TextField)(
+    ({ theme: { spacing, breakpoints } }) => ({
+        width: spacing(160),
+        textAlign: 'center',
 
-    [theme.breakpoints.down('md')]: {
-        width: theme.spacing(140),
-    },
+        [breakpoints.down('md')]: {
+            width: spacing(140),
+        },
 
-    [theme.breakpoints.down('sm')]: {
-        width: theme.spacing(60),
-    },
-})) as typeof TextField;
+        [breakpoints.down('sm')]: {
+            width: spacing(60),
+        },
+    }),
+) as typeof TextField;
 
-export const CardContainer = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    width: theme.spacing(160),
-    maxHeight: '42vh',
-    overflowY: 'scroll',
-    overflowX: 'hidden',
+export const CardContainer = styled(Box)(
+    ({ theme: { spacing, breakpoints } }) => ({
+        display: 'flex',
+        flexDirection: 'column',
+        width: spacing(160),
+        maxHeight: '42vh',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
 
-    [theme.breakpoints.down('md')]: {
-        width: theme.spacing(140),
-    },
+        [breakpoints.down('md')]: {
+            width: spacing(140),
+        },
 
-    [theme.breakpoints.down('sm')]: {
-        width: theme.spacing(60),
-    },
-}));
+        [breakpoints.down('sm')]: {
+            width: spacing(60),
+        },
+    }),
+);
