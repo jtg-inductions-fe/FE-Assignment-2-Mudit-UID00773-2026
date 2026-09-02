@@ -1,4 +1,6 @@
-import { ISearchUser, IUserInfo } from './userApiSlice.types';
+import { IUserInfo } from '@components';
+
+import { ISearchUser } from './userApiSlice.types';
 
 export const transformUserData = (responseData: ISearchUser[]): IUserInfo[] => {
     const userData: IUserInfo[] = [];
