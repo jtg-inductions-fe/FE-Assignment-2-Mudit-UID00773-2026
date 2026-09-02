@@ -1,23 +1,18 @@
-import { createEntityAdapter } from '@reduxjs/toolkit';
+import { ENDPOINT } from '@constant';
 
-import { ISearchUser } from './userApiSlice.types';
+import { ISearchUser, IUserInfo } from './userApiSlice.types';
+import { transformUserData } from './userApiSlice.utils';
 import { apiSlice } from '../base/apiSlice';
-
-const searchUsersAdaptor = createEntityAdapter();
-
-const initialState = searchUsersAdaptor.getInitialState();
 
 export const searchUserApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getUsers: builder.query<ISearchUser[], string>({
+        getUsers: builder.query<IUserInfo[], string>({
             query: (userSearch: string) => ({
-                url: `/search/users?q=${userSearch}`,
+                url: ENDPOINT.GET_USERS(userSearch),
             }),
             transformResponse: (response: { items: ISearchUser[] }) => {
                 const loadedUsers: ISearchUser[] = response.items;
-
-                searchUsersAdaptor.setAll(initialState, loadedUsers);
-                return loadedUsers;
+                return transformUserData(loadedUsers);
             },
         }),
     }),

@@ -6,3 +6,5 @@ export {
 } from './themeConstant';
 
 export { ROUTES } from './routesConstants';
+
+export { ENDPOINT } from './endpointsConstant';

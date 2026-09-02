@@ -1,18 +1,13 @@
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Box, Button, debounce, Typography } from '@mui/material';
+import { Autocomplete, debounce, Typography } from '@mui/material';
 
 import { useGetUsersQuery } from '@app/api/user/userApiSlice';
 import { UserCard } from '@components';
 
-import {
-    CardContainer,
-    HomeContainer,
-    SearchBox,
-    SearchBoxContainer,
-} from './Home.styles';
+import { HomeContainer, SearchBox, SearchBoxContainer } from './Home.styles';
 
 const Home = () => {
     const [searchContent, setSearchContent] = useState('');
@@ -30,7 +25,7 @@ const Home = () => {
         }
     }, [searchParams]);
 
-    const { data: user } = useGetUsersQuery(data, {
+    const { data: user, isLoading } = useGetUsersQuery(data, {
         skip: !data || data === '',
     });
 
@@ -38,50 +33,51 @@ const Home = () => {
         () =>
             debounce((value: string) => {
                 setData(value);
+                setSearchParams(value ? { q: value } : {});
             }, 500),
-        [],
+        [setSearchParams],
     );
-
-    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (searchContent === '') return;
-        setSearchParams({ q: searchContent });
-    };
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const nextValue = e.target.value;
-        setSearchContent(nextValue);
-        debouncer(nextValue);
-    };
 
     return (
         <HomeContainer>
             <Typography variant="h1">MEET THE DEVELOPERS</Typography>
             <Typography variant="h2">
-                Discover Devs Through Thier Github Profiles
+                Discover Devs Through Their Github Profiles
             </Typography>
-            <SearchBoxContainer component="form" onSubmit={handleFormSubmit}>
-                <Box position="absolute" top="9px" right="8px" zIndex={2}>
-                    <Button variant="contained" type="submit">
-                        {' '}
-                        Search
-                    </Button>
-                </Box>
-                <SearchBox
-                    hiddenLabel
-                    autoComplete="off"
-                    variant="outlined"
+            <SearchBoxContainer>
+                <Autocomplete
+                    freeSolo
+                    options={user || []}
+                    open={Boolean(data) && !isLoading}
                     value={searchContent}
-                    onChange={handleSearchChange}
+                    onInputChange={(_event, newInputValue) => {
+                        setSearchContent(newInputValue);
+                        debouncer(newInputValue);
+                    }}
+                    filterOptions={(x) => x}
+                    loading={isLoading}
+                    renderInput={(params) => (
+                        <SearchBox
+                            {...params}
+                            hiddenLabel
+                            autoComplete="off"
+                            variant="outlined"
+                            placeholder="Search for a developer"
+                        />
+                    )}
+                    slotProps={{
+                        listbox: {
+                            sx: {
+                                padding: 0,
+                                overflowX: 'hidden',
+                            },
+                        },
+                    }}
+                    renderOption={(props, option) => (
+                        <UserCard {...props} key={option.id} item={option} />
+                    )}
                 />
             </SearchBoxContainer>
-            {data ? (
-                <CardContainer>
-                    {user?.map((item) => (
-                        <UserCard key={item.id} item={item} />
-                    ))}
-                </CardContainer>
-            ) : null}
         </HomeContainer>
     );
 };

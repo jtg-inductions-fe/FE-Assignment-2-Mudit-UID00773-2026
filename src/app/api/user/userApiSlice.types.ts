@@ -20,3 +20,10 @@ export interface ISearchUser {
     site_admin: boolean;
     score: number;
 }
+
+export interface IUserInfo {
+    username: string;
+    url: string;
+    profileImage: string;
+    id: number;
+}

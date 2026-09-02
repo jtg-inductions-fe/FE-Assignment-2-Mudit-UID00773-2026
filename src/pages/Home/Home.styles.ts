@@ -5,11 +5,13 @@ export const HomeContainer = styled(Box)(({ theme: { breakpoints } }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: '30vh',
+    paddingTop: '10vh',
+    marginTop: '10vh',
+    minHeight: '90vh',
     textAlign: 'center',
 
     [breakpoints.down('md')]: {
-        marginTop: '20vh',
+        marginTop: '10vh',
     },
 }));
 
