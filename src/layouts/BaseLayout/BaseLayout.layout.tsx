@@ -2,14 +2,13 @@ import { Outlet } from 'react-router-dom';
 
 import { Box, Container } from '@mui/material';
 
+import { Navbar } from '@components';
+
 const BaseLayout = () => (
     <>
-        <Box>
-            <Box component="nav">Header</Box>
-        </Box>
-
+        <Navbar />
         <Container maxWidth="xl">
-            <Box>
+            <Box component="main">
                 <Outlet />
             </Box>
         </Container>
