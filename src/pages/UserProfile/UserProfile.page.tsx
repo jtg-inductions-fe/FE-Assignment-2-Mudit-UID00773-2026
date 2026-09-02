@@ -31,11 +31,20 @@ import {
 
 const UserProfile = () => {
     const { id } = useParams();
-    const { data: user, isLoading } = useGetUserInfoQuery(id ?? '', {
+    const {
+        data: user,
+        isLoading,
+        isError,
+        error,
+    } = useGetUserInfoQuery(id ?? '', {
         skip: !id,
     });
 
     const theme = useTheme();
+
+    if (isError) {
+        throw Error('Error fetching user data: ' + error?.message);
+    }
 
     return (
         <UserProfileContainer minHeight="100vh" paddingTop="12vh">
