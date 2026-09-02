@@ -1,8 +1,12 @@
 import { IUserInfo } from '@components';
 import { ENDPOINTS } from '@constant';
+import { IUserProfileDetails } from '@pages';
 
 import { ISearchUser, IUser } from './userApiSlice.types';
-import { transformUserData } from './userApiSlice.utils';
+import {
+    transformUserData,
+    transformUserProfileData,
+} from './userApiSlice.utils';
 import { apiSlice } from '../base/apiSlice';
 
 export const searchUserApiSlice = apiSlice.injectEndpoints({
@@ -16,10 +20,14 @@ export const searchUserApiSlice = apiSlice.injectEndpoints({
                 return transformUserData(loadedUsers);
             },
         }),
-        getUserInfo: builder.query<IUser, string>({
+        getUserInfo: builder.query<IUserProfileDetails, string>({
             query: (username: string) => ({
-                url: `/users/${username}`,
+                url: ENDPOINT.GET_USER_INFO.replace(':username', username),
             }),
+            transformResponse: (response: IUser) => {
+                const loadedUserInfo: IUser = response;
+                return transformUserProfileData(loadedUserInfo);
+            },
         }),
     }),
     overrideExisting: false,
