@@ -49,8 +49,8 @@ const UserProfile = () => {
                         <>
                             <UserProfileSection>
                                 <UserProfileImage
-                                    src={user?.avatar_url}
-                                    alt={user?.login}
+                                    src={user?.profileImage}
+                                    alt={user?.username}
                                 />
                                 <Button
                                     variant="contained"
@@ -86,7 +86,7 @@ const UserProfile = () => {
                                         {user?.name ?? ''}
                                     </UserProfileHeading>
                                     <Typography component="h2">
-                                        @{user?.login}
+                                        @{user?.username}
                                     </Typography>
                                 </Box>
                                 <Box>
@@ -120,7 +120,7 @@ const UserProfile = () => {
                                     <UserProfileContent
                                         icon={CalendarMonthIcon}
                                         content={
-                                            user?.created_at?.split('T')[0] ||
+                                            user?.joined?.split('T')[0] ||
                                             'No data available'
                                         }
                                     />
