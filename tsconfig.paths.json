@@ -8,7 +8,8 @@
             "@pages": ["pages/index"],
             "@layouts": ["layouts/index"],
             "@app/*": ["app/*"],
-            "@components": ["components/index"]
+            "@components": ["components/index"],
+            "@utils": ["utils/index"]
         }
     }
 }
