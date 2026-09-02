@@ -2,7 +2,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { ROUTES } from '@constant';
 import { BaseLayout } from '@layouts';
-import { ErrorBoundary, Home, MyProfile, NotFound, UserProfile } from '@pages';
+import {
+    ErrorBoundary,
+    Home,
+    Login,
+    MyProfile,
+    NotFound,
+    UserProfile,
+} from '@pages';
 
 const router = createBrowserRouter([
     {
@@ -20,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: ROUTES.MY_PROFILE,
                 element: <MyProfile />,
+            },
+            {
+                path: ROUTES.LOGIN,
+                element: <Login />,
             },
             {
                 path: ROUTES.NOT_FOUND,
