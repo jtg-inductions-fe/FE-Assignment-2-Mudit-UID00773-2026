@@ -5,11 +5,11 @@ import {
     setUserToLocalStorage,
 } from 'utils/userLocalStorage';
 
-import { IUser } from '@app/api/user/userApiSlice.types';
+import { IUserProfileDetails } from '@pages';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: {
-    user: IUser | null;
+    user: IUserProfileDetails | null;
     token: string;
     isAuthenticated: boolean;
 } = {
@@ -24,7 +24,7 @@ export const authSlice = createSlice({
     reducers: {
         setCredentials: (
             state,
-            action: { payload: { user: IUser; token: string } },
+            action: { payload: { user: IUserProfileDetails; token: string } },
         ) => {
             const { user, token } = action.payload;
             state.user = user;
@@ -46,5 +46,9 @@ export const authSlice = createSlice({
 });
 
 export const { setCredentials, logOut } = authSlice.actions;
+
+export const selectUser = (state: {
+    auth: { user: IUserProfileDetails | null };
+}) => state.auth.user;
 
 export default authSlice.reducer;

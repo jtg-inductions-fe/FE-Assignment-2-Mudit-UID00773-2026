@@ -11,6 +11,8 @@ import {
     UserProfile,
 } from '@pages';
 
+import ProtectedRoute from './ProtectedRoute';
+
 const router = createBrowserRouter([
     {
         element: <BaseLayout />,
@@ -25,16 +27,21 @@ const router = createBrowserRouter([
                 element: <UserProfile />,
             },
             {
-                path: ROUTES.MY_PROFILE,
-                element: <MyProfile />,
-            },
-            {
                 path: ROUTES.LOGIN,
                 element: <Login />,
             },
             {
                 path: ROUTES.NOT_FOUND,
                 element: <NotFound />,
+            },
+            {
+                element: <ProtectedRoute />,
+                children: [
+                    {
+                        path: ROUTES.MY_PROFILE,
+                        element: <MyProfile />,
+                    },
+                ],
             },
         ],
     },
