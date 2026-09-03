@@ -1,11 +1,11 @@
-import { IUser } from '@app/api/user/userApiSlice.types';
+import { IUserProfileDetails } from '@pages';
 
-export const getUserFromLocalStorage = (): IUser | null => {
+export const getUserFromLocalStorage = (): IUserProfileDetails | null => {
     const storedUser = localStorage.getItem('user');
-    return storedUser ? (JSON.parse(storedUser) as IUser) : null;
+    return storedUser ? (JSON.parse(storedUser) as IUserProfileDetails) : null;
 };
 
-export const setUserToLocalStorage = (user: IUser): void => {
+export const setUserToLocalStorage = (user: IUserProfileDetails): void => {
     localStorage.setItem('user', JSON.stringify(user));
 };
 

@@ -1,16 +1,13 @@
-import { useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-import { getTokenFromLocalStorage } from 'utils/userLocalStorage';
 
 import { Avatar, Box, Button, Toolbar } from '@mui/material';
 
-import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
-import { logOut } from '@app/auth/authSlice';
+import { logOut, selectUser } from '@app/auth/authSlice';
 import Logo from '@assets/images/Logo.svg';
 import { DropDown } from '@components';
+import { ROUTES } from '@constant';
 
 import { LogoImage, MyAppBar, NavItemContainer } from './Navbar.styles';
 
@@ -23,29 +20,20 @@ const Navbar = () => {
             state.auth.isAuthenticated,
     );
 
-    const imageUrl = useSelector(
-        (state: { auth: { user: { avatar_url: string } | null } }) =>
-            state.auth.user?.avatar_url || '',
-    );
-
-    const [triggerLoginQuery] = useLazyLoginQuery();
+    const imageUrl = useSelector(selectUser)?.profileImage;
 
     const handleLogout = () => {
         dispatch(logOut());
+        void navigate(ROUTES.LOGIN);
     };
 
     const menuOptions = [
-        { label: 'View Profile', onClick: () => void navigate('/profile') },
+        {
+            label: 'View Profile',
+            onClick: () => void navigate(ROUTES.MY_PROFILE),
+        },
         { label: 'Logout', onClick: () => handleLogout() },
     ];
-
-    useEffect(() => {
-        const token = getTokenFromLocalStorage();
-
-        if (token) {
-            void triggerLoginQuery({ token });
-        }
-    }, []);
 
     return (
         <MyAppBar position="fixed" elevation={10}>
@@ -66,7 +54,7 @@ const Navbar = () => {
                             color="primary"
                             variant="contained"
                             sx={{ fontWeight: 'bold' }}
-                            onClick={() => void navigate('/login')}
+                            onClick={() => void navigate(ROUTES.LOGIN)}
                         >
                             LOGIN
                         </Button>

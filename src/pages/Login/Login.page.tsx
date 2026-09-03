@@ -1,5 +1,6 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -8,6 +9,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import {
     Box,
     Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
     InputAdornment,
     Typography,
     useTheme,
@@ -23,6 +28,11 @@ import {
     LoginInput,
 } from './Login.styles';
 
+interface IFormInput {
+    username: string;
+    password: string;
+}
+
 const Login = () => {
     const theme = useTheme();
 
@@ -34,119 +44,154 @@ const Login = () => {
             state.auth.isAuthenticated,
     );
 
-    const [triggerLoginQuery, { data }] = useLazyLoginQuery();
+    const [dialogOpen, setDialogOpen] = useState(false);
 
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [triggerLoginQuery] = useLazyLoginQuery();
 
-    const [usernameError, setUsernameError] = useState<string>('');
-    const [passwordError, setPasswordError] = useState<string>('');
+    const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
+        const { username, password } = inputData;
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (username.trim().length === 0) {
-            setUsernameError('Username cannot be empty');
-        } else {
-            setUsernameError('');
+        const response = await triggerLoginQuery(password).unwrap();
+
+        if (response?.username !== username) {
+            setDialogOpen(true);
+            return;
         }
 
-        if (password.trim().length === 0) {
-            setPasswordError('Password cannot be empty');
-        } else {
-            setPasswordError('');
-        }
-
-        await triggerLoginQuery({ token: password });
-
-        if (data?.login !== username) {
-            throw Error('Invalid username or password');
-        }
-
-        dispatch(setCredentials({ user: data, token: password }));
+        dispatch(setCredentials({ user: response, token: password }));
     };
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<IFormInput>({
+        defaultValues: { username: '', password: '' },
+    });
 
     useEffect(() => {
         if (isAuthenticated) {
-            void navigate('/profile');
+            void navigate('/');
         }
     }, [isAuthenticated]);
 
     return (
-        <LoginContainer>
-            <LoginCard elevation={4}>
-                <Box>
-                    <IconContainer>
-                        <PersonIcon color="primary" />
-                    </IconContainer>
-                </Box>
-                <Box>
-                    <Typography
-                        variant="h3"
-                        component="h1"
-                        fontSize={theme.typography.pxToRem(24)}
-                        fontWeight="bold"
+        <>
+            <Dialog
+                open={dialogOpen}
+                onClose={() => setDialogOpen(false)}
+                fullWidth
+                PaperProps={{
+                    style: { background: theme.palette.background.default },
+                }}
+            >
+                <DialogTitle>Error during Login</DialogTitle>
+                <DialogContent>
+                    <Typography>Invalid Username</Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        variant="contained"
+                        onClick={() => setDialogOpen(false)}
                     >
-                        Login Page
-                    </Typography>
-                    <Typography
-                        component="p"
-                        marginTop={theme.typography.pxToRem(12)}
-                    >
-                        Login to get more features
-                    </Typography>
-                </Box>
-                <Box
-                    component="form"
-                    onSubmit={(e) => {
-                        void handleSubmit(e);
-                    }}
-                    marginTop={theme.typography.pxToRem(28)}
-                    display="flex"
-                    flexDirection="column"
-                    gap={theme.typography.pxToRem(16)}
-                >
-                    <LoginInput
-                        label="Username"
-                        variant="outlined"
-                        // required
-                        value={username}
-                        error={Boolean(usernameError)}
-                        helperText={usernameError}
-                        onChange={(e) => setUsername(e.target.value)}
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <PersonIcon />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                    <LoginInput
-                        label="Password"
-                        variant="outlined"
-                        // required
-                        value={password}
-                        error={Boolean(passwordError)}
-                        helperText={passwordError}
-                        onChange={(e) => setPassword(e.target.value)}
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LockIcon />
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                    <Button type="submit" variant="contained" fullWidth>
-                        Login
+                        Close
                     </Button>
-                </Box>
-            </LoginCard>
-        </LoginContainer>
+                </DialogActions>
+            </Dialog>
+            <LoginContainer>
+                <LoginCard elevation={4}>
+                    <Box>
+                        <IconContainer>
+                            <PersonIcon color="primary" />
+                        </IconContainer>
+                    </Box>
+                    <Box>
+                        <Typography
+                            variant="h3"
+                            component="h1"
+                            fontSize={theme.typography.pxToRem(24)}
+                            fontWeight="bold"
+                        >
+                            Login Page
+                        </Typography>
+                        <Typography
+                            component="p"
+                            marginTop={theme.typography.pxToRem(12)}
+                        >
+                            Login to get more features
+                        </Typography>
+                    </Box>
+
+                    <Box
+                        component="form"
+                        onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+                        display="flex"
+                        flexDirection="column"
+                        gap={theme.typography.pxToRem(16)}
+                        marginTop={theme.typography.pxToRem(28)}
+                    >
+                        <Controller
+                            name="username"
+                            control={control}
+                            rules={{ required: 'Username is required' }}
+                            render={({ field }) => (
+                                <LoginInput
+                                    {...field}
+                                    label="Username"
+                                    variant="outlined"
+                                    error={Boolean(errors?.username)}
+                                    helperText={
+                                        errors?.username
+                                            ? errors.username.message
+                                            : ''
+                                    }
+                                    slotProps={{
+                                        input: {
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <PersonIcon />
+                                                </InputAdornment>
+                                            ),
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+                        <Controller
+                            name="password"
+                            control={control}
+                            rules={{ required: 'Password is required' }}
+                            render={({ field }) => (
+                                <LoginInput
+                                    {...field}
+                                    label="Password"
+                                    variant="outlined"
+                                    type="password"
+                                    error={Boolean(errors?.password)}
+                                    helperText={
+                                        errors?.password
+                                            ? errors.password.message
+                                            : ''
+                                    }
+                                    slotProps={{
+                                        input: {
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <LockIcon />
+                                                </InputAdornment>
+                                            ),
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+                        <Button type="submit" variant="contained" fullWidth>
+                            Login
+                        </Button>
+                    </Box>
+                </LoginCard>
+            </LoginContainer>
+        </>
     );
 };
 
