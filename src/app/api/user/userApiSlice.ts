@@ -22,7 +22,7 @@ export const searchUserApiSlice = apiSlice.injectEndpoints({
         }),
         getUserInfo: builder.query<IUserProfileDetails, string>({
             query: (username: string) => ({
-                url: ENDPOINT.GET_USER_INFO.replace(':username', username),
+                url: ENDPOINTS.GET_USER_INFO.replace(':username', username),
             }),
             transformResponse: (response: IUser) => {
                 const loadedUserInfo: IUser = response;
