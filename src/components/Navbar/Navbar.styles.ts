@@ -1,4 +1,4 @@
-import { AppBar, Box, styled } from '@mui/material';
+import { AppBar, Box, BoxProps, styled } from '@mui/material';
 
 export const MyAppBar = styled(AppBar)(
     ({ theme: { spacing, breakpoints, palette } }) => ({
@@ -24,8 +24,8 @@ export const LogoImage = styled('img')(({ theme: { breakpoints } }) => ({
     },
 }));
 
-export const NavItemContainer = styled(Box)(() => ({
+export const NavItemContainer = styled(Box)<BoxProps>(() => ({
     display: 'flex',
     alignItems: 'stretch',
     width: 'fit-content',
-})) as typeof Box;
+}));

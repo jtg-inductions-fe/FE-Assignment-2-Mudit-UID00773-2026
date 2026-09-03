@@ -38,6 +38,8 @@ const Home = () => {
         [setSearchParams],
     );
 
+    useEffect(() => () => debouncer.clear(), [debouncer]);
+
     return (
         <HomeContainer>
             <Typography variant="h1">MEET THE DEVELOPERS</Typography>

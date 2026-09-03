@@ -1,5 +1,5 @@
 import { IUserInfo } from '@components';
-import { ENDPOINT } from '@constant';
+import { ENDPOINTS } from '@constant';
 
 import { ISearchUser } from './userApiSlice.types';
 import { transformUserData } from './userApiSlice.utils';
@@ -9,7 +9,7 @@ export const searchUserApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getUsers: builder.query<IUserInfo[], string>({
             query: (userSearch: string) => ({
-                url: ENDPOINT.GET_USERS.replace('username', userSearch),
+                url: ENDPOINTS.GET_USERS.replace('username', userSearch),
             }),
             transformResponse: (response: { items: ISearchUser[] }) => {
                 const loadedUsers: ISearchUser[] = response.items;

@@ -7,4 +7,4 @@ export {
 
 export { ROUTES } from './routesConstants';
 
-export { ENDPOINT } from './endpointsConstant';
+export { ENDPOINTS } from './endpointsConstant';

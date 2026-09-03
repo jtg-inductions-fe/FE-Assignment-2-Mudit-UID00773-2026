@@ -1,26 +1,36 @@
-import { Box, styled, TextField } from '@mui/material';
+import {
+    Box,
+    BoxProps,
+    styled,
+    TextField,
+    TextFieldProps,
+} from '@mui/material';
 
-export const HomeContainer = styled(Box)(({ theme: { breakpoints } }) => ({
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingTop: '10vh',
-    marginTop: '10vh',
-    minHeight: '90vh',
-    textAlign: 'center',
-
-    [breakpoints.down('md')]: {
+export const HomeContainer = styled(Box)<BoxProps>(
+    ({ theme: { breakpoints } }) => ({
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingTop: '10vh',
         marginTop: '10vh',
-    },
-}));
+        minHeight: '90vh',
+        textAlign: 'center',
 
-export const SearchBoxContainer = styled(Box)(({ theme: { spacing } }) => ({
-    marginTop: spacing(12),
-    position: 'relative',
-})) as typeof Box;
+        [breakpoints.down('md')]: {
+            marginTop: '10vh',
+        },
+    }),
+);
 
-export const SearchBox = styled(TextField)(
+export const SearchBoxContainer = styled(Box)<BoxProps>(
+    ({ theme: { spacing } }) => ({
+        marginTop: spacing(12),
+        position: 'relative',
+    }),
+);
+
+export const SearchBox = styled(TextField)<TextFieldProps>(
     ({ theme: { spacing, breakpoints } }) => ({
         width: spacing(160),
         textAlign: 'center',
@@ -33,7 +43,7 @@ export const SearchBox = styled(TextField)(
             width: spacing(60),
         },
     }),
-) as typeof TextField;
+);
 
 export const CardContainer = styled(Box)(
     ({ theme: { spacing, breakpoints } }) => ({
