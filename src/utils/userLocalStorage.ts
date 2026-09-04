@@ -1,4 +1,4 @@
-import { IUserProfileDetails } from '@pages';
+import { IUserProfileDetails } from '@app/api/user/userApiSlice.types';
 
 export const getUserFromLocalStorage = (): IUserProfileDetails | null => {
     const storedUser = localStorage.getItem('user');
