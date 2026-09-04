@@ -2,7 +2,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { ROUTES } from '@constant';
 import { BaseLayout } from '@layouts';
-import { ErrorBoundary, Home, MyProfile, NotFound, UserProfile } from '@pages';
+import {
+    ErrorBoundary,
+    Home,
+    Login,
+    MyProfile,
+    NotFound,
+    UserProfile,
+} from '@pages';
+
+import ProtectedRoute from './ProtectedRoute';
 
 const router = createBrowserRouter([
     {
@@ -18,12 +27,21 @@ const router = createBrowserRouter([
                 element: <UserProfile />,
             },
             {
-                path: ROUTES.MY_PROFILE,
-                element: <MyProfile />,
+                path: ROUTES.LOGIN,
+                element: <Login />,
             },
             {
                 path: ROUTES.NOT_FOUND,
                 element: <NotFound />,
+            },
+            {
+                element: <ProtectedRoute />,
+                children: [
+                    {
+                        path: ROUTES.MY_PROFILE,
+                        element: <MyProfile />,
+                    },
+                ],
             },
         ],
     },

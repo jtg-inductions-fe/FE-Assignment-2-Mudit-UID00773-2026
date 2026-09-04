@@ -11,10 +11,12 @@ export const ErrorBox = styled(Box)(() => ({
     marginTop: '10vh',
 }));
 
-export const ErrorImage = styled('img')(({ theme: { spacing } }) => ({
-    width: spacing(160),
-    height: spacing(80),
-    objectFit: 'cover',
-    objectPosition: 'center',
-    marginBottom: '24px',
-}));
+export const ErrorImage = styled('img')(
+    ({ theme: { spacing, typography } }) => ({
+        width: spacing(160),
+        height: spacing(80),
+        objectFit: 'cover',
+        objectPosition: 'center',
+        marginBottom: typography.pxToRem(24),
+    }),
+);
