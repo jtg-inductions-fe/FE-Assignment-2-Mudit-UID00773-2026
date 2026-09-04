@@ -26,7 +26,10 @@ const BaseLayout = () => {
 
             dispatch(setCredentials({ user: response, token: token }));
         } catch {
-            dispatch(logOut());
+            const currentToken = getTokenFromLocalStorage();
+            if (currentToken === token) {
+                dispatch(logOut());
+            }
         }
     };
 
