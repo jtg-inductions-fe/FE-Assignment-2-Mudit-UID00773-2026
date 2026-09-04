@@ -56,3 +56,19 @@ export interface IUser {
     created_at: string;
     updated_at: string;
 }
+
+export interface IUserProfileDetails {
+    id: number;
+    username: string;
+    profileImage: string;
+    htmlUrl: string;
+    name: string;
+    bio: string | null;
+    company: string | null;
+    location: string | null;
+    email: string | null;
+    joined: string;
+    publicRepos: number;
+    followers: number;
+    following: number;
+}

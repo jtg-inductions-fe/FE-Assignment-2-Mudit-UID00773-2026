@@ -46,7 +46,7 @@ const UserProfile = () => {
                     {!user ? (
                         <Typography variant="h2">No User Data Found</Typography>
                     ) : (
-                        <>
+                        <Box>
                             <UserProfileSection>
                                 <UserProfileImage
                                     src={user?.profileImage}
@@ -65,7 +65,7 @@ const UserProfile = () => {
                                     endIcon={<LaunchIcon />}
                                     color="primary"
                                     onClick={() =>
-                                        window.open(user?.html_url, '_blank')
+                                        window.open(user?.htmlUrl, '_blank')
                                     }
                                 >
                                     View on GitHub
@@ -133,7 +133,7 @@ const UserProfile = () => {
                                     <UserProfileInfoCard
                                         icon={ImportContactsIcon}
                                         heading="Repositories"
-                                        content={user?.public_repos || 0}
+                                        content={user?.publicRepos || 0}
                                     />
                                     <UserProfileInfoCard
                                         icon={GroupIcon}
@@ -147,7 +147,7 @@ const UserProfile = () => {
                                     />
                                 </Box>
                             </UserProfileSection>
-                        </>
+                        </Box>
                     )}
                 </UserProfileCard>
             )}

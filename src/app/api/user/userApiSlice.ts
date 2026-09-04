@@ -1,7 +1,7 @@
 import { IUserInfo } from '@components';
 import { ENDPOINTS } from '@constant';
-import { IUserProfileDetails } from '@pages';
 
+import { IUserProfileDetails } from './userApiSlice.types';
 import { ISearchUser, IUser } from './userApiSlice.types';
 import {
     transformUserData,
