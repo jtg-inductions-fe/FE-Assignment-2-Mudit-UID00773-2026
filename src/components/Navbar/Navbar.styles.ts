@@ -1,4 +1,6 @@
-import { AppBar, Box, styled } from '@mui/material';
+import { LinkProps as RouterLinkProps } from 'react-router-dom';
+
+import { AppBar, Link, LinkProps, styled } from '@mui/material';
 
 export const MyAppBar = styled(AppBar)(
     ({ theme: { spacing, breakpoints, palette } }) => ({
@@ -24,8 +26,10 @@ export const LogoImage = styled('img')(({ theme: { breakpoints } }) => ({
     },
 }));
 
-export const NavItemContainer = styled(Box)(() => ({
+type NavItemContainerProps = LinkProps & Partial<RouterLinkProps>;
+
+export const NavItemContainer = styled(Link)<NavItemContainerProps>(() => ({
     display: 'flex',
     alignItems: 'stretch',
     width: 'fit-content',
-})) as typeof Box;
+}));
