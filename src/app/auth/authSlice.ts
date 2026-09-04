@@ -5,7 +5,7 @@ import {
     setUserToLocalStorage,
 } from 'utils/userLocalStorage';
 
-import { IUserProfileDetails } from '@pages';
+import { IUserProfileDetails } from '@app/api/user/userApiSlice.types';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: {

@@ -55,13 +55,12 @@ const Login = () => {
         try {
             const response = await triggerLoginQuery(password).unwrap();
 
-            if (response?.username !== username) {
+            if (response && response?.username !== username) {
                 setDialogErrorMessage('Invalid Username');
                 setDialogOpen(true);
                 return;
             }
 
-            setDialogErrorMessage('');
             dispatch(setCredentials({ user: response, token: password }));
         } catch (error) {
             if (error && typeof error === 'object' && 'error' in error) {
@@ -71,6 +70,11 @@ const Login = () => {
             }
             setDialogOpen(true);
         }
+    };
+
+    const handleDialogClose = () => {
+        setDialogErrorMessage('');
+        setDialogOpen(false);
     };
 
     const {
@@ -85,13 +89,13 @@ const Login = () => {
         if (isAuthenticated) {
             void navigate('/');
         }
-    }, [isAuthenticated]);
+    }, [navigate, isAuthenticated]);
 
     return (
         <>
             <Dialog
                 open={dialogOpen}
-                onClose={() => setDialogOpen(false)}
+                onClose={handleDialogClose}
                 fullWidth
                 PaperProps={{
                     style: { background: theme.palette.background.default },
@@ -102,10 +106,7 @@ const Login = () => {
                     <Typography>{dialogErrorMessage}</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        variant="contained"
-                        onClick={() => setDialogOpen(false)}
-                    >
+                    <Button variant="contained" onClick={handleDialogClose}>
                         Close
                     </Button>
                 </DialogActions>

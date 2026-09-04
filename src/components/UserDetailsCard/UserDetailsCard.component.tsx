@@ -8,8 +8,8 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Box, Button, Stack, Typography, useTheme } from '@mui/material';
 
+import { IUserProfileDetails } from '@app/api/user/userApiSlice.types';
 import { UserProfileContent, UserProfileInfoCard } from '@components';
-import { IUserProfileDetails } from '@pages';
 
 import {
     ProfileDivider,
@@ -38,9 +38,7 @@ const UserDetailsCard = ({ user }: { user: IUserProfileDetails }) => {
                             startIcon={<GitHubIcon />}
                             endIcon={<LaunchIcon />}
                             color="primary"
-                            onClick={() =>
-                                window.open(user?.html_url, '_blank')
-                            }
+                            onClick={() => window.open(user?.htmlUrl, '_blank')}
                         >
                             View on GitHub
                         </Button>
@@ -100,7 +98,7 @@ const UserDetailsCard = ({ user }: { user: IUserProfileDetails }) => {
                             <UserProfileInfoCard
                                 icon={ImportContactsIcon}
                                 heading="Repositories"
-                                content={user?.public_repos || 0}
+                                content={user?.publicRepos || 0}
                             />
                             <UserProfileInfoCard
                                 icon={GroupIcon}

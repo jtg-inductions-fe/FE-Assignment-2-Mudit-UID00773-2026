@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
@@ -14,24 +14,27 @@ const BaseLayout = () => {
     const dispatch = useDispatch();
     const [triggerLoginQuery] = useLazyLoginQuery();
 
-    const func = async (token: string) => {
-        try {
-            const response = await triggerLoginQuery(token).unwrap();
+    const func = useCallback(
+        async (token: string) => {
+            try {
+                const response = await triggerLoginQuery(token).unwrap();
 
-            const currentToken = getTokenFromLocalStorage();
+                const currentToken = getTokenFromLocalStorage();
 
-            if (currentToken !== token) {
-                return;
+                if (currentToken !== token) {
+                    return;
+                }
+
+                dispatch(setCredentials({ user: response, token: token }));
+            } catch {
+                const currentToken = getTokenFromLocalStorage();
+                if (currentToken === token) {
+                    dispatch(logOut());
+                }
             }
-
-            dispatch(setCredentials({ user: response, token: token }));
-        } catch {
-            const currentToken = getTokenFromLocalStorage();
-            if (currentToken === token) {
-                dispatch(logOut());
-            }
-        }
-    };
+        },
+        [dispatch, triggerLoginQuery],
+    );
 
     useEffect(() => {
         const token = getTokenFromLocalStorage();
@@ -39,7 +42,7 @@ const BaseLayout = () => {
         if (token) {
             void func(token);
         }
-    }, []);
+    }, [func]);
 
     return (
         <>
