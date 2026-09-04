@@ -45,20 +45,32 @@ const Login = () => {
     );
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogErrorMessage, setDialogErrorMessage] = useState('');
 
     const [triggerLoginQuery] = useLazyLoginQuery();
 
     const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
         const { username, password } = inputData;
 
-        const response = await triggerLoginQuery(password).unwrap();
+        try {
+            const response = await triggerLoginQuery(password).unwrap();
 
-        if (response?.username !== username) {
+            if (response?.username !== username) {
+                setDialogErrorMessage('Invalid Username');
+                setDialogOpen(true);
+                return;
+            }
+
+            setDialogErrorMessage('');
+            dispatch(setCredentials({ user: response, token: password }));
+        } catch (error) {
+            if (error && typeof error === 'object' && 'error' in error) {
+                setDialogErrorMessage(String(error?.error));
+            } else {
+                setDialogErrorMessage('Something went worng');
+            }
             setDialogOpen(true);
-            return;
         }
-
-        dispatch(setCredentials({ user: response, token: password }));
     };
 
     const {
@@ -87,7 +99,7 @@ const Login = () => {
             >
                 <DialogTitle>Error during Login</DialogTitle>
                 <DialogContent>
-                    <Typography>Invalid Username</Typography>
+                    <Typography>{dialogErrorMessage}</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button

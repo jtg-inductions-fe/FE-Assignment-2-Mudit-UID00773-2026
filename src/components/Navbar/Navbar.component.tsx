@@ -23,6 +23,7 @@ const Navbar = () => {
     );
 
     const imageUrl = useSelector(selectUser)?.profileImage;
+    const username = useSelector(selectUser)?.username;
 
     const handleLogout = () => {
         dispatch(logOut());
@@ -50,7 +51,7 @@ const Navbar = () => {
                 <NavItemContainer>
                     {isAuthenticated ? (
                         <DropDown items={menuOptions}>
-                            <Avatar alt="Remy Sharp" src={imageUrl} />
+                            <Avatar alt={username} src={imageUrl} />
                         </DropDown>
                     ) : (
                         <Button

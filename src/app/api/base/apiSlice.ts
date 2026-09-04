@@ -5,11 +5,15 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://api.github.com',
         prepareHeaders: (headers) => {
-            const token = getTokenFromLocalStorage();
+            if (!headers.has('authorization')) {
+                const token = getTokenFromLocalStorage();
 
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`);
+                if (token) {
+                    headers.set('authorization', `Bearer ${token}`);
+                }
             }
+
+            return headers;
         },
     }),
     tagTypes: ['User', 'Profile'],

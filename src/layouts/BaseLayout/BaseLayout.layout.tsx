@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 import { Box, Container } from '@mui/material';
 
 import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
-import { setCredentials } from '@app/auth/authSlice';
+import { logOut, setCredentials } from '@app/auth/authSlice';
 import { Navbar } from '@components';
 import { getTokenFromLocalStorage } from '@utils';
 
@@ -15,9 +15,19 @@ const BaseLayout = () => {
     const [triggerLoginQuery] = useLazyLoginQuery();
 
     const func = async (token: string) => {
-        const response = await triggerLoginQuery(token).unwrap();
+        try {
+            const response = await triggerLoginQuery(token).unwrap();
 
-        dispatch(setCredentials({ user: response, token: token }));
+            const currentToken = getTokenFromLocalStorage();
+
+            if (currentToken !== token) {
+                return;
+            }
+
+            dispatch(setCredentials({ user: response, token: token }));
+        } catch {
+            dispatch(logOut());
+        }
     };
 
     useEffect(() => {
