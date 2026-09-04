@@ -1,8 +1,5 @@
-// import { setCredentials } from '@app/auth/authSlice';
-
-import { IUserProfileDetails } from '@pages';
-
 import { apiSlice } from '../base/apiSlice';
+import { IUserProfileDetails } from '../user/userApiSlice.types';
 import { IUser } from '../user/userApiSlice.types';
 import { transformUserProfileData } from '../user/userApiSlice.utils';
 
