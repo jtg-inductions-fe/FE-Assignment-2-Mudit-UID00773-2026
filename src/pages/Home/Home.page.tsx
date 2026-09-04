@@ -2,7 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Autocomplete, debounce, Typography } from '@mui/material';
+import {
+    Autocomplete,
+    Box,
+    debounce,
+    Typography,
+    useTheme,
+} from '@mui/material';
 
 import { useGetUsersQuery } from '@app/api/user/userApiSlice';
 import { UserCard } from '@components';
@@ -13,6 +19,8 @@ const Home = () => {
     const [searchContent, setSearchContent] = useState('');
     const [data, setData] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const theme = useTheme();
 
     useEffect(() => {
         const q = searchParams.get('q');
@@ -79,6 +87,16 @@ const Home = () => {
                         <UserCard {...props} key={option.id} item={option} />
                     )}
                 />
+                {isLoading && (
+                    <Box
+                        component="div"
+                        bgcolor={theme.palette.grey[200]}
+                        textAlign="left"
+                        padding={4}
+                    >
+                        Loading...
+                    </Box>
+                )}
             </SearchBoxContainer>
         </HomeContainer>
     );

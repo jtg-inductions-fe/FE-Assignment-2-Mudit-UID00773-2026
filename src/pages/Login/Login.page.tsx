@@ -47,7 +47,7 @@ const Login = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogErrorMessage, setDialogErrorMessage] = useState('');
 
-    const [triggerLoginQuery] = useLazyLoginQuery();
+    const [triggerLoginQuery, { isLoading }] = useLazyLoginQuery();
 
     const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
         const { username, password } = inputData;
@@ -198,8 +198,13 @@ const Login = () => {
                                 />
                             )}
                         />
-                        <Button type="submit" variant="contained" fullWidth>
-                            Login
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
                     </Box>
                 </LoginCard>

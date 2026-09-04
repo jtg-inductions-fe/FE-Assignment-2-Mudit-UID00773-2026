@@ -1,5 +1,3 @@
-import { CircularProgress } from '@mui/material';
-
 import { useLoginQuery } from '@app/api/auth/authApiSlice';
 import { UserDetailsCard } from '@components';
 import { getTokenFromLocalStorage } from '@utils';
@@ -12,11 +10,7 @@ const MyProfile = () => {
 
     return (
         <MyProfileContainer minHeight="100vh" paddingTop="12vh">
-            {isLoading ? (
-                <CircularProgress aria-label="Loading…" />
-            ) : (
-                <>{user && <UserDetailsCard user={user} />}</>
-            )}
+            <UserDetailsCard user={user} isLoading={isLoading} />
         </MyProfileContainer>
     );
 };
