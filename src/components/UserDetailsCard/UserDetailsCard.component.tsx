@@ -19,7 +19,7 @@ import {
     UserProfileSection,
 } from './UserDetailsCard.styles';
 
-const UserDetailsCard = (user: IUserProfileDetails) => {
+const UserDetailsCard = ({ user }: { user: IUserProfileDetails }) => {
     const theme = useTheme();
 
     return (

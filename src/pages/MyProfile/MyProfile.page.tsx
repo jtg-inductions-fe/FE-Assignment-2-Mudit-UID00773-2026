@@ -10,7 +10,7 @@ const MyProfile = () => {
 
     return (
         <MyProfileContainer minHeight="100vh" paddingTop="12vh">
-            {user && <UserDetailsCard {...user} />}
+            {user && <UserDetailsCard user={user} />}
         </MyProfileContainer>
     );
 };
