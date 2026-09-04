@@ -1,7 +1,6 @@
-import { IUserProfileDetails } from 'pages/UserProfile/userProfile.types';
-
 import { IUserInfo } from '@components';
 
+import { IUserProfileDetails } from './userApiSlice.types';
 import { ISearchUser, IUser } from './userApiSlice.types';
 
 export const transformUserData = (responseData: ISearchUser[]): IUserInfo[] => {
@@ -26,14 +25,14 @@ export const transformUserProfileData = (
     id: responseData.id,
     username: responseData.login,
     profileImage: responseData.avatar_url,
-    html_url: responseData.html_url,
+    htmlUrl: responseData.html_url,
     name: responseData.name,
     bio: responseData.bio,
     company: responseData.company,
     location: responseData.location,
     email: responseData.email,
     joined: responseData.created_at,
-    public_repos: responseData.public_repos,
+    publicRepos: responseData.public_repos,
     followers: responseData.followers,
     following: responseData.following,
 });
