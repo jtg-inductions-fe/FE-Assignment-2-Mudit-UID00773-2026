@@ -33,7 +33,7 @@ const UserProfile = () => {
             {isLoading ? (
                 <CircularProgress aria-label="Loading…" />
             ) : (
-                <>{user && <UserDetailsCard {...user} />}</>
+                <>{user && <UserDetailsCard user={user} />}</>
             )}
         </UserProfileContainer>
     );
