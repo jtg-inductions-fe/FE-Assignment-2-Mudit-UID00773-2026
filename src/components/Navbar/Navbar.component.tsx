@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Avatar, Box, Button, Toolbar } from '@mui/material';
@@ -15,6 +15,8 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const { pathname } = useLocation();
+
     const isAuthenticated = useSelector(
         (state: { auth: { isAuthenticated: boolean } }) =>
             state.auth.isAuthenticated,
@@ -25,6 +27,8 @@ const Navbar = () => {
 
     const handleLogout = () => {
         dispatch(logOut());
+
+        if (pathname === '/' + ROUTES.MY_PROFILE) void navigate(ROUTES.LOGIN);
     };
 
     const menuOptions = [
