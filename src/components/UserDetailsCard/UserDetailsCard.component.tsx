@@ -92,14 +92,9 @@ const UserDetailsCard = ({
                 <Box>
                     {isLoading ? (
                         <UserProfileTextSkeleton variant="text" />
-                    ) : (
-                        <Typography
-                            component="p"
-                            color={user?.bio ? '' : 'lightgray'}
-                        >
-                            {user?.bio || 'User Bio'}
-                        </Typography>
-                    )}
+                    ) : user?.bio ? (
+                        <Typography component="p">{user?.bio}</Typography>
+                    ) : null}
                 </Box>
                 <Stack gap={theme.typography.pxToRem(12)}>
                     {isLoading ? (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +9,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import {
     Box,
     Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     InputAdornment,
     Typography,
     useTheme,
@@ -20,6 +16,7 @@ import {
 
 import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
 import { setCredentials } from '@app/auth/authSlice';
+import { openSnackbar } from '@app/snackbar/snackbarSlice';
 
 import {
     IconContainer,
@@ -44,9 +41,6 @@ const Login = () => {
             state.auth.isAuthenticated,
     );
 
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [dialogErrorMessage, setDialogErrorMessage] = useState('');
-
     const [triggerLoginQuery, { isLoading }] = useLazyLoginQuery();
 
     const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
@@ -56,25 +50,34 @@ const Login = () => {
             const response = await triggerLoginQuery(password).unwrap();
 
             if (response && response?.username !== username) {
-                setDialogErrorMessage('Invalid Username');
-                setDialogOpen(true);
+                dispatch(
+                    openSnackbar({
+                        alertSeverity: 'error',
+                        message: 'Invalid Username',
+                    }),
+                );
                 return;
             }
 
             dispatch(setCredentials({ user: response, token: password }));
+            dispatch(
+                openSnackbar({
+                    alertSeverity: 'success',
+                    message: 'Successfully Logged in',
+                }),
+            );
         } catch (error) {
+            let errorMessage = 'Something went worng';
             if (error && typeof error === 'object' && 'error' in error) {
-                setDialogErrorMessage(String(error?.error));
-            } else {
-                setDialogErrorMessage('Something went worng');
+                errorMessage = String(error?.error);
             }
-            setDialogOpen(true);
+            dispatch(
+                openSnackbar({
+                    alertSeverity: 'error',
+                    message: errorMessage,
+                }),
+            );
         }
-    };
-
-    const handleDialogClose = () => {
-        setDialogErrorMessage('');
-        setDialogOpen(false);
     };
 
     const {
@@ -93,24 +96,6 @@ const Login = () => {
 
     return (
         <>
-            <Dialog
-                open={dialogOpen}
-                onClose={handleDialogClose}
-                fullWidth
-                PaperProps={{
-                    style: { background: theme.palette.background.default },
-                }}
-            >
-                <DialogTitle>Error during Login</DialogTitle>
-                <DialogContent>
-                    <Typography>{dialogErrorMessage}</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" onClick={handleDialogClose}>
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
             <LoginContainer>
                 <LoginCard elevation={4}>
                     <Box>

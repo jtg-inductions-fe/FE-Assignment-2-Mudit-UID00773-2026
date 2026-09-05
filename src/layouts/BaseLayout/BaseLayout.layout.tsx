@@ -3,12 +3,12 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import { Box, Container } from '@mui/material';
-
 import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
 import { logOut, setCredentials } from '@app/auth/authSlice';
-import { Navbar } from '@components';
+import { CustomizedSnackbars, Navbar } from '@components';
 import { getTokenFromLocalStorage } from '@utils';
+
+import { MainContainer } from './BaseLayout.types';
 
 const BaseLayout = () => {
     const dispatch = useDispatch();
@@ -46,12 +46,11 @@ const BaseLayout = () => {
 
     return (
         <>
+            <CustomizedSnackbars />
             <Navbar />
-            <Container maxWidth="xl">
-                <Box component="main">
-                    <Outlet />
-                </Box>
-            </Container>
+            <MainContainer component="main" maxWidth="xl">
+                <Outlet />
+            </MainContainer>
         </>
     );
 };

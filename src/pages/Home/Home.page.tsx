@@ -52,7 +52,7 @@ const Home = () => {
         username: '',
         url: '',
         profileImage: '',
-        id: index + 23,
+        id: index,
     }));
 
     return (
