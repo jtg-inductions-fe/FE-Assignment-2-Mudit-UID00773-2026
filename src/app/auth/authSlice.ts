@@ -1,12 +1,11 @@
+import { IUserProfileDetails } from '@app/api/user/userApiSlice.types';
+import { createSlice } from '@reduxjs/toolkit';
 import {
     removeTokenFromLocalStorage,
     removeUserFromLocalStorage,
     setTokenToLocalStorage,
     setUserToLocalStorage,
-} from 'utils/userLocalStorage';
-
-import { IUserProfileDetails } from '@app/api/user/userApiSlice.types';
-import { createSlice } from '@reduxjs/toolkit';
+} from '@utils';
 
 const initialState: {
     user: IUserProfileDetails | null;
