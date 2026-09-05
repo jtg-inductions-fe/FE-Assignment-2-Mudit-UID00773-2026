@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
+import { useLazyGetUserInfoFromTokenQuery } from '@app/api/user/userApiSlice';
 import { logOut, setCredentials } from '@app/auth/authSlice';
 import { CustomizedSnackbars, Navbar } from '@components';
 import { getTokenFromLocalStorage } from '@utils';
@@ -12,7 +12,8 @@ import { MainContainer } from './BaseLayout.types';
 
 const BaseLayout = () => {
     const dispatch = useDispatch();
-    const [triggerLoginQuery] = useLazyLoginQuery();
+    const [triggerLoginQuery, { isFetching }] =
+        useLazyGetUserInfoFromTokenQuery();
 
     const func = useCallback(
         async (token: string) => {
@@ -36,6 +37,11 @@ const BaseLayout = () => {
         [dispatch, triggerLoginQuery],
     );
 
+    const isAuthenticated = useSelector(
+        (state: { auth: { isAuthenticated: boolean } }) =>
+            state.auth.isAuthenticated,
+    );
+
     useEffect(() => {
         const token = getTokenFromLocalStorage();
 
@@ -47,7 +53,7 @@ const BaseLayout = () => {
     return (
         <>
             <CustomizedSnackbars />
-            <Navbar />
+            <Navbar isAuthenticated={isAuthenticated} isFetching={isFetching} />
             <MainContainer component="main" maxWidth="xl">
                 <Outlet />
             </MainContainer>

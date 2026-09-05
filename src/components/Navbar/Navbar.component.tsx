@@ -10,18 +10,24 @@ import Logo from '@assets/images/Logo.svg';
 import { DropDown } from '@components';
 import { ROUTES } from '@constant';
 
-import { LogoImage, MyAppBar, NavItemContainer } from './Navbar.styles';
+import {
+    AvatarSkeleton,
+    LogoImage,
+    MyAppBar,
+    NavItemContainer,
+} from './Navbar.styles';
 
-const Navbar = () => {
+const Navbar = ({
+    isAuthenticated,
+    isFetching,
+}: {
+    isAuthenticated: boolean;
+    isFetching: boolean;
+}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const { pathname } = useLocation();
-
-    const isAuthenticated = useSelector(
-        (state: { auth: { isAuthenticated: boolean } }) =>
-            state.auth.isAuthenticated,
-    );
 
     const imageUrl = useSelector(selectUser)?.profileImage;
     const username = useSelector(selectUser)?.username;
@@ -56,7 +62,9 @@ const Navbar = () => {
                 </Box>
 
                 <NavItemContainer>
-                    {isAuthenticated ? (
+                    {isFetching ? (
+                        <AvatarSkeleton variant="circular" />
+                    ) : isAuthenticated ? (
                         <DropDown items={menuOptions}>
                             <Avatar alt={username} src={imageUrl} />
                         </DropDown>

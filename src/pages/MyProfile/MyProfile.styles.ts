@@ -5,4 +5,5 @@ export const MyProfileContainer = styled(Box)<BoxProps>(({}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    height: '100%',
 }));

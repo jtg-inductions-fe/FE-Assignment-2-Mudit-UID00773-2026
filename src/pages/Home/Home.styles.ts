@@ -12,9 +12,7 @@ export const HomeContainer = styled(Box)<BoxProps>(
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: '10vh',
-        marginTop: '10vh',
-        minHeight: '90vh',
+        height: '100%',
         textAlign: 'center',
 
         [breakpoints.down('md')]: {

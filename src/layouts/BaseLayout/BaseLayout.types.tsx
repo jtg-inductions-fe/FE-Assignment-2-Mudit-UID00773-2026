@@ -5,4 +5,5 @@ export const MainContainer = styled(Container)<ContainerProps>(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    minHeight: '100vh',
 }));
