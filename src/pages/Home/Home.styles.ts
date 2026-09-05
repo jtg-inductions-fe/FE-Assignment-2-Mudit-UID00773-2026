@@ -18,7 +18,7 @@ export const HomeContainer = styled(Box)<BoxProps>(
         textAlign: 'center',
 
         [breakpoints.down('md')]: {
-            marginTop: '10vh',
+            marginTop: '4vh',
         },
     }),
 );

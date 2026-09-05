@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Avatar, Box, Button, Toolbar } from '@mui/material';
 
 import { logOut, selectUser } from '@app/auth/authSlice';
+import { openSnackbar } from '@app/snackbar/snackbarSlice';
 import Logo from '@assets/images/Logo.svg';
 import { DropDown } from '@components';
 import { ROUTES } from '@constant';
@@ -27,6 +28,12 @@ const Navbar = () => {
 
     const handleLogout = () => {
         dispatch(logOut());
+        dispatch(
+            openSnackbar({
+                alertSeverity: 'success',
+                message: 'Successfully Logged out',
+            }),
+        );
 
         if (pathname === '/' + ROUTES.MY_PROFILE) void navigate(ROUTES.LOGIN);
     };
