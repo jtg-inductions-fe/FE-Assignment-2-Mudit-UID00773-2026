@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 
 import { useGetUsersQuery } from '@app/api/user/userApiSlice';
-import { UserCard } from '@components';
+import { IUserInfo, UserCard, UserCardSkeleton } from '@components';
 
 import { HomeContainer, SearchBox, SearchBoxContainer } from './Home.styles';
 
@@ -33,7 +33,7 @@ const Home = () => {
         }
     }, [searchParams]);
 
-    const { data: user, isLoading } = useGetUsersQuery(data, {
+    const { data: user, isFetching } = useGetUsersQuery(data, {
         skip: !data || data === '',
     });
 
@@ -48,6 +48,13 @@ const Home = () => {
 
     useEffect(() => () => debouncer.clear(), [debouncer]);
 
+    const sample: IUserInfo[] = Array.from({ length: 5 }).map((_, index) => ({
+        username: '',
+        url: '',
+        profileImage: '',
+        id: index + 23,
+    }));
+
     return (
         <HomeContainer>
             <Typography variant="h1">MEET THE DEVELOPERS</Typography>
@@ -57,15 +64,15 @@ const Home = () => {
             <SearchBoxContainer>
                 <Autocomplete
                     freeSolo
-                    options={user || []}
-                    open={Boolean(data) && !isLoading}
+                    options={(isFetching ? sample : user) || []}
+                    open={Boolean(data)}
                     value={searchContent}
                     onInputChange={(_event, newInputValue) => {
                         setSearchContent(newInputValue);
                         debouncer(newInputValue);
                     }}
                     filterOptions={(x) => x}
-                    loading={isLoading}
+                    loading={isFetching}
                     renderInput={(params) => (
                         <SearchBox
                             {...params}
@@ -83,18 +90,26 @@ const Home = () => {
                             },
                         },
                     }}
-                    renderOption={(props, option) => (
-                        <UserCard {...props} key={option.id} item={option} />
-                    )}
+                    renderOption={(props, option) =>
+                        isFetching ? (
+                            <UserCardSkeleton />
+                        ) : (
+                            <UserCard
+                                {...props}
+                                key={option.id}
+                                item={option}
+                            />
+                        )
+                    }
                 />
-                {isLoading && (
+                {Boolean(data) && (!user || user.length == 0) && (
                     <Box
                         component="div"
                         bgcolor={theme.palette.grey[200]}
                         textAlign="left"
                         padding={4}
                     >
-                        Loading...
+                        No user Found...
                     </Box>
                 )}
             </SearchBoxContainer>
