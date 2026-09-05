@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router';
 
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
     Box,
     Button,
@@ -14,7 +16,7 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
+import { useLazyGetUserInfoFromTokenQuery } from '@app/api/user/userApiSlice';
 import { setCredentials } from '@app/auth/authSlice';
 import { openSnackbar } from '@app/snackbar/snackbarSlice';
 
@@ -41,7 +43,12 @@ const Login = () => {
             state.auth.isAuthenticated,
     );
 
-    const [triggerLoginQuery, { isLoading }] = useLazyLoginQuery();
+    const [triggerLoginQuery, { isLoading }] =
+        useLazyGetUserInfoFromTokenQuery();
+
+    const [viewPassword, setViewPassword] = useState(false);
+
+    const toggleViewPassword = () => setViewPassword((prev) => !prev);
 
     const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
         const { username, password } = inputData;
@@ -110,13 +117,13 @@ const Login = () => {
                             fontSize={theme.typography.pxToRem(24)}
                             fontWeight="bold"
                         >
-                            Login Page
+                            Login
                         </Typography>
                         <Typography
                             component="p"
                             marginTop={theme.typography.pxToRem(12)}
                         >
-                            Login to get more features
+                            Ready to get started? Log in below
                         </Typography>
                     </Box>
 
@@ -164,7 +171,7 @@ const Login = () => {
                                     {...field}
                                     label="Password"
                                     variant="outlined"
-                                    type="password"
+                                    type={viewPassword ? 'text' : 'password'}
                                     error={Boolean(errors?.password)}
                                     helperText={
                                         errors?.password
@@ -176,6 +183,25 @@ const Login = () => {
                                             startAdornment: (
                                                 <InputAdornment position="start">
                                                     <LockIcon />
+                                                </InputAdornment>
+                                            ),
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    {viewPassword ? (
+                                                        <VisibilityOffIcon
+                                                            cursor="pointer"
+                                                            onClick={
+                                                                toggleViewPassword
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <VisibilityIcon
+                                                            cursor="pointer"
+                                                            onClick={
+                                                                toggleViewPassword
+                                                            }
+                                                        />
+                                                    )}
                                                 </InputAdornment>
                                             ),
                                         },

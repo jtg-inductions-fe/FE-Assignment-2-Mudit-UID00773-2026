@@ -64,6 +64,7 @@ const Home = () => {
             <SearchBoxContainer>
                 <Autocomplete
                     freeSolo
+                    disablePortal
                     options={(isFetching ? sample : user) || []}
                     open={Boolean(data)}
                     value={searchContent}
@@ -87,6 +88,7 @@ const Home = () => {
                             sx: {
                                 padding: 0,
                                 overflowX: 'hidden',
+                                maxHeight: theme.typography.pxToRem(260),
                             },
                         },
                     }}

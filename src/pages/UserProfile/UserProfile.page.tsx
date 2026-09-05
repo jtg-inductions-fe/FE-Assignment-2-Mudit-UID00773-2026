@@ -27,7 +27,7 @@ const UserProfile = () => {
     }
 
     return (
-        <UserProfileContainer minHeight="100vh" paddingTop="12vh">
+        <UserProfileContainer>
             <UserDetailsCard user={user} isLoading={isLoading} />
         </UserProfileContainer>
     );

@@ -4,7 +4,7 @@ import { IintialState } from './snackbarSlice.types';
 
 const initialState: IintialState = {
     open: false,
-    alertSeverity: 'info',
+    alertSeverity: '',
     message: '',
 };
 
@@ -24,7 +24,7 @@ export const snackbarSlice = createSlice({
         },
         closeSnackbar: (state) => {
             state.open = false;
-            state.alertSeverity = 'info';
+            state.alertSeverity = '';
             state.message = '';
         },
     },

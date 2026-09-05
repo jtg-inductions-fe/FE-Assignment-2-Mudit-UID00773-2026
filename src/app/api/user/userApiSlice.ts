@@ -29,8 +29,28 @@ export const searchUserApiSlice = apiSlice.injectEndpoints({
                 return transformUserProfileData(loadedUserInfo);
             },
         }),
+        getUserInfoFromToken: builder.query<IUserProfileDetails, string | null>(
+            {
+                query: (token: string) => ({
+                    url: ENDPOINTS.GET_USER_INFO_FROM_TOKEN,
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }),
+                transformResponse: (response: IUser) => {
+                    const loadedUserInfo: IUser = response;
+                    return transformUserProfileData(loadedUserInfo);
+                },
+            },
+        ),
     }),
     overrideExisting: false,
 });
 
-export const { useGetUsersQuery, useGetUserInfoQuery } = searchUserApiSlice;
+export const {
+    useGetUsersQuery,
+    useGetUserInfoQuery,
+    useGetUserInfoFromTokenQuery,
+    useLazyGetUserInfoFromTokenQuery,
+} = searchUserApiSlice;

@@ -8,14 +8,13 @@ import {
     TextFieldProps,
 } from '@mui/material';
 
-export const LoginContainer = styled(Box)<BoxProps>(({ theme }) => ({
+export const LoginContainer = styled(Box)<BoxProps>(({}) => ({
     width: '100%',
-    marginTop: '30vh',
+    height: '100%',
     textAlign: 'center',
-
-    [theme.breakpoints.down('md')]: {
-        marginTop: '20vh',
-    },
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 }));
 
 export const LoginCard = styled(Paper)<PaperProps>(({ theme }) => ({
