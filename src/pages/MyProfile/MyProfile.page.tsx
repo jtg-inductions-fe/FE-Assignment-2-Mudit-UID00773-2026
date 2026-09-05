@@ -1,6 +1,4 @@
-import { CircularProgress } from '@mui/material';
-
-import { useLoginQuery } from '@app/api/auth/authApiSlice';
+import { useGetUserInfoFromTokenQuery } from '@app/api/user/userApiSlice';
 import { UserDetailsCard } from '@components';
 import { getTokenFromLocalStorage } from '@utils';
 
@@ -8,15 +6,13 @@ import { MyProfileContainer } from './MyProfile.styles';
 
 const MyProfile = () => {
     const token = getTokenFromLocalStorage();
-    const { data: user, isLoading } = useLoginQuery(token, { skip: !token });
+    const { data: user, isLoading } = useGetUserInfoFromTokenQuery(token, {
+        skip: !token,
+    });
 
     return (
-        <MyProfileContainer minHeight="100vh" paddingTop="12vh">
-            {isLoading ? (
-                <CircularProgress aria-label="Loading…" />
-            ) : (
-                <>{user && <UserDetailsCard user={user} />}</>
-            )}
+        <MyProfileContainer>
+            <UserDetailsCard user={user} isLoading={isLoading} />
         </MyProfileContainer>
     );
 };

@@ -6,20 +6,19 @@ import { useNavigate } from 'react-router';
 
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
     Box,
     Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     InputAdornment,
     Typography,
     useTheme,
 } from '@mui/material';
 
-import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
+import { useLazyGetUserInfoFromTokenQuery } from '@app/api/user/userApiSlice';
 import { setCredentials } from '@app/auth/authSlice';
+import { openSnackbar } from '@app/snackbar/snackbarSlice';
 
 import {
     IconContainer,
@@ -44,10 +43,12 @@ const Login = () => {
             state.auth.isAuthenticated,
     );
 
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [dialogErrorMessage, setDialogErrorMessage] = useState('');
+    const [triggerLoginQuery, { isLoading }] =
+        useLazyGetUserInfoFromTokenQuery();
 
-    const [triggerLoginQuery] = useLazyLoginQuery();
+    const [viewPassword, setViewPassword] = useState(false);
+
+    const toggleViewPassword = () => setViewPassword((prev) => !prev);
 
     const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
         const { username, password } = inputData;
@@ -56,25 +57,34 @@ const Login = () => {
             const response = await triggerLoginQuery(password).unwrap();
 
             if (response && response?.username !== username) {
-                setDialogErrorMessage('Invalid Username');
-                setDialogOpen(true);
+                dispatch(
+                    openSnackbar({
+                        alertSeverity: 'error',
+                        message: 'Invalid Username',
+                    }),
+                );
                 return;
             }
 
             dispatch(setCredentials({ user: response, token: password }));
+            dispatch(
+                openSnackbar({
+                    alertSeverity: 'success',
+                    message: 'Successfully Logged in',
+                }),
+            );
         } catch (error) {
+            let errorMessage = 'Something went worng';
             if (error && typeof error === 'object' && 'error' in error) {
-                setDialogErrorMessage(String(error?.error));
-            } else {
-                setDialogErrorMessage('Something went worng');
+                errorMessage = String(error?.error);
             }
-            setDialogOpen(true);
+            dispatch(
+                openSnackbar({
+                    alertSeverity: 'error',
+                    message: errorMessage,
+                }),
+            );
         }
-    };
-
-    const handleDialogClose = () => {
-        setDialogErrorMessage('');
-        setDialogOpen(false);
     };
 
     const {
@@ -93,24 +103,6 @@ const Login = () => {
 
     return (
         <>
-            <Dialog
-                open={dialogOpen}
-                onClose={handleDialogClose}
-                fullWidth
-                PaperProps={{
-                    style: { background: theme.palette.background.default },
-                }}
-            >
-                <DialogTitle>Error during Login</DialogTitle>
-                <DialogContent>
-                    <Typography>{dialogErrorMessage}</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" onClick={handleDialogClose}>
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
             <LoginContainer>
                 <LoginCard elevation={4}>
                     <Box>
@@ -125,13 +117,13 @@ const Login = () => {
                             fontSize={theme.typography.pxToRem(24)}
                             fontWeight="bold"
                         >
-                            Login Page
+                            Login
                         </Typography>
                         <Typography
                             component="p"
                             marginTop={theme.typography.pxToRem(12)}
                         >
-                            Login to get more features
+                            Ready to get started? Log in below
                         </Typography>
                     </Box>
 
@@ -179,7 +171,7 @@ const Login = () => {
                                     {...field}
                                     label="Password"
                                     variant="outlined"
-                                    type="password"
+                                    type={viewPassword ? 'text' : 'password'}
                                     error={Boolean(errors?.password)}
                                     helperText={
                                         errors?.password
@@ -193,13 +185,37 @@ const Login = () => {
                                                     <LockIcon />
                                                 </InputAdornment>
                                             ),
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    {viewPassword ? (
+                                                        <VisibilityOffIcon
+                                                            cursor="pointer"
+                                                            onClick={
+                                                                toggleViewPassword
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <VisibilityIcon
+                                                            cursor="pointer"
+                                                            onClick={
+                                                                toggleViewPassword
+                                                            }
+                                                        />
+                                                    )}
+                                                </InputAdornment>
+                                            ),
                                         },
                                     }}
                                 />
                             )}
                         />
-                        <Button type="submit" variant="contained" fullWidth>
-                            Login
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
                     </Box>
                 </LoginCard>

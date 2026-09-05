@@ -1,7 +1,5 @@
 import { useParams } from 'react-router-dom';
 
-import { CircularProgress } from '@mui/material';
-
 import { useGetUserInfoQuery } from '@app/api/user/userApiSlice';
 import { UserDetailsCard } from '@components';
 
@@ -29,12 +27,8 @@ const UserProfile = () => {
     }
 
     return (
-        <UserProfileContainer minHeight="100vh" paddingTop="12vh">
-            {isLoading ? (
-                <CircularProgress aria-label="Loading…" />
-            ) : (
-                <>{user && <UserDetailsCard user={user} />}</>
-            )}
+        <UserProfileContainer>
+            <UserDetailsCard user={user} isLoading={isLoading} />
         </UserProfileContainer>
     );
 };

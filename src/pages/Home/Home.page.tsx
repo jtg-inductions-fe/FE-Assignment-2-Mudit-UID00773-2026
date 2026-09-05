@@ -2,10 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Autocomplete, debounce, Typography } from '@mui/material';
+import {
+    Autocomplete,
+    Box,
+    debounce,
+    Typography,
+    useTheme,
+} from '@mui/material';
 
 import { useGetUsersQuery } from '@app/api/user/userApiSlice';
-import { UserCard } from '@components';
+import { IUserInfo, UserCard, UserCardSkeleton } from '@components';
 
 import { HomeContainer, SearchBox, SearchBoxContainer } from './Home.styles';
 
@@ -13,6 +19,8 @@ const Home = () => {
     const [searchContent, setSearchContent] = useState('');
     const [data, setData] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const theme = useTheme();
 
     useEffect(() => {
         const q = searchParams.get('q');
@@ -25,7 +33,7 @@ const Home = () => {
         }
     }, [searchParams]);
 
-    const { data: user, isLoading } = useGetUsersQuery(data, {
+    const { data: user, isFetching } = useGetUsersQuery(data, {
         skip: !data || data === '',
     });
 
@@ -40,6 +48,13 @@ const Home = () => {
 
     useEffect(() => () => debouncer.clear(), [debouncer]);
 
+    const sample: IUserInfo[] = Array.from({ length: 5 }).map((_, index) => ({
+        username: '',
+        url: '',
+        profileImage: '',
+        id: index,
+    }));
+
     return (
         <HomeContainer>
             <Typography variant="h1">MEET THE DEVELOPERS</Typography>
@@ -49,15 +64,16 @@ const Home = () => {
             <SearchBoxContainer>
                 <Autocomplete
                     freeSolo
-                    options={user || []}
-                    open={Boolean(data) && !isLoading}
+                    disablePortal
+                    options={(isFetching ? sample : user) || []}
+                    open={Boolean(data)}
                     value={searchContent}
                     onInputChange={(_event, newInputValue) => {
                         setSearchContent(newInputValue);
                         debouncer(newInputValue);
                     }}
                     filterOptions={(x) => x}
-                    loading={isLoading}
+                    loading={isFetching}
                     renderInput={(params) => (
                         <SearchBox
                             {...params}
@@ -72,13 +88,32 @@ const Home = () => {
                             sx: {
                                 padding: 0,
                                 overflowX: 'hidden',
+                                maxHeight: theme.typography.pxToRem(260),
                             },
                         },
                     }}
-                    renderOption={(props, option) => (
-                        <UserCard {...props} key={option.id} item={option} />
-                    )}
+                    renderOption={(props, option) =>
+                        isFetching ? (
+                            <UserCardSkeleton />
+                        ) : (
+                            <UserCard
+                                {...props}
+                                key={option.id}
+                                item={option}
+                            />
+                        )
+                    }
                 />
+                {Boolean(data) && (!user || user.length == 0) && (
+                    <Box
+                        component="div"
+                        bgcolor={theme.palette.grey[200]}
+                        textAlign="left"
+                        padding={4}
+                    >
+                        No user Found...
+                    </Box>
+                )}
             </SearchBoxContainer>
         </HomeContainer>
     );
