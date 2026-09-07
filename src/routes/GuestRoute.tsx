@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 import { ROUTES } from '@constant';
 import { useValidateUser } from '@hooks';
@@ -19,7 +19,7 @@ const GuestRoute = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Typography variant="h2">Verifing session...</Typography>
+                <CircularProgress aria-label="Loading…" />
             </Box>
         );
     }
