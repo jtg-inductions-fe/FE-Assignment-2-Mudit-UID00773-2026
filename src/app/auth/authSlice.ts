@@ -50,4 +50,8 @@ export const selectUser = (state: {
     auth: { user: IUserProfileDetails | null };
 }) => state.auth.user;
 
+export const isAuthenticated = (state: {
+    auth: { isAuthenticated: boolean };
+}) => state.auth.isAuthenticated;
+
 export default authSlice.reducer;

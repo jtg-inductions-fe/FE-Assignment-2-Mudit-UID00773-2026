@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Avatar, Box, Button, Toolbar } from '@mui/material';
@@ -27,8 +27,6 @@ const Navbar = ({
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { pathname } = useLocation();
-
     const imageUrl = useSelector(selectUser)?.profileImage;
     const username = useSelector(selectUser)?.username;
 
@@ -40,8 +38,6 @@ const Navbar = ({
                 message: 'Successfully Logged out',
             }),
         );
-
-        if (pathname === '/' + ROUTES.MY_PROFILE) void navigate(ROUTES.LOGIN);
     };
 
     const menuOptions = [
