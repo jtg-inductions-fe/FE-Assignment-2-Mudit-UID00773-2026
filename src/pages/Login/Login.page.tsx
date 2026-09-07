@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { Controller, useForm } from 'react-hook-form';
 
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
@@ -16,9 +14,7 @@ import {
     useTheme,
 } from '@mui/material';
 
-import { useLazyGetUserInfoFromTokenQuery } from '@app/api/user/userApiSlice';
-import { setCredentials } from '@app/auth/authSlice';
-import { openSnackbar } from '@app/snackbar/snackbarSlice';
+import { useValidateUser } from '@hooks';
 
 import {
     IconContainer,
@@ -26,66 +22,15 @@ import {
     LoginContainer,
     LoginInput,
 } from './Login.styles';
-
-interface IFormInput {
-    username: string;
-    password: string;
-}
+import { IFormInput } from './Login.types';
 
 const Login = () => {
     const theme = useTheme();
-
-    const navigate = useNavigate();
-
-    const dispatch = useDispatch();
-    const isAuthenticated = useSelector(
-        (state: { auth: { isAuthenticated: boolean } }) =>
-            state.auth.isAuthenticated,
-    );
-
-    const [triggerLoginQuery, { isLoading }] =
-        useLazyGetUserInfoFromTokenQuery();
+    const { isLoading, onSubmit } = useValidateUser();
 
     const [viewPassword, setViewPassword] = useState(false);
 
     const toggleViewPassword = () => setViewPassword((prev) => !prev);
-
-    const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
-        const { username, password } = inputData;
-
-        try {
-            const response = await triggerLoginQuery(password).unwrap();
-
-            if (response && response?.username !== username) {
-                dispatch(
-                    openSnackbar({
-                        alertSeverity: 'error',
-                        message: 'Invalid Username',
-                    }),
-                );
-                return;
-            }
-
-            dispatch(setCredentials({ user: response, token: password }));
-            dispatch(
-                openSnackbar({
-                    alertSeverity: 'success',
-                    message: 'Successfully Logged in',
-                }),
-            );
-        } catch (error) {
-            let errorMessage = 'Something went worng';
-            if (error && typeof error === 'object' && 'error' in error) {
-                errorMessage = String(error?.error);
-            }
-            dispatch(
-                openSnackbar({
-                    alertSeverity: 'error',
-                    message: errorMessage,
-                }),
-            );
-        }
-    };
 
     const {
         control,
@@ -94,12 +39,6 @@ const Login = () => {
     } = useForm<IFormInput>({
         defaultValues: { username: '', password: '' },
     });
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            void navigate('/');
-        }
-    }, [navigate, isAuthenticated]);
 
     return (
         <>

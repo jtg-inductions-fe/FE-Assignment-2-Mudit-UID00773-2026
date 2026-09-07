@@ -1,18 +1,17 @@
-import { useGetUserInfoFromTokenQuery } from '@app/api/user/userApiSlice';
-import { UserDetailsCard } from '@components';
+import { DetailsCard, DetailsCardSkeleton } from '@components';
+import { useUserDetailFromToken } from '@hooks';
 import { getTokenFromLocalStorage } from '@utils';
 
 import { MyProfileContainer } from './MyProfile.styles';
 
 const MyProfile = () => {
     const token = getTokenFromLocalStorage();
-    const { data: user, isLoading } = useGetUserInfoFromTokenQuery(token, {
-        skip: !token,
-    });
+
+    const { user, isLoading } = useUserDetailFromToken(token!);
 
     return (
         <MyProfileContainer>
-            <UserDetailsCard user={user} isLoading={isLoading} />
+            {isLoading ? <DetailsCardSkeleton /> : <DetailsCard user={user} />}
         </MyProfileContainer>
     );
 };

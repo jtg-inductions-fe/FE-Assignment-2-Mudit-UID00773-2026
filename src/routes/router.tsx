@@ -11,6 +11,7 @@ import {
     UserProfile,
 } from '@pages';
 
+import GuestRoute from './GuestRoute';
 import ProtectedRoute from './ProtectedRoute';
 
 const router = createBrowserRouter([
@@ -27,12 +28,17 @@ const router = createBrowserRouter([
                 element: <UserProfile />,
             },
             {
-                path: ROUTES.LOGIN,
-                element: <Login />,
-            },
-            {
                 path: ROUTES.NOT_FOUND,
                 element: <NotFound />,
+            },
+            {
+                element: <GuestRoute />,
+                children: [
+                    {
+                        path: ROUTES.LOGIN,
+                        element: <Login />,
+                    },
+                ],
             },
             {
                 element: <ProtectedRoute />,

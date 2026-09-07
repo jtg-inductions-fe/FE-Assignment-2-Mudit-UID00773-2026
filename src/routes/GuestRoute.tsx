@@ -6,7 +6,7 @@ import { ROUTES } from '@constant';
 import { useValidateUser } from '@hooks';
 import { getTokenFromLocalStorage } from '@utils';
 
-const ProtectedRoute = () => {
+const GuestRoute = () => {
     const { userInfoFromRedux, isLoggedIn } = useValidateUser();
     const token = getTokenFromLocalStorage();
 
@@ -19,12 +19,12 @@ const ProtectedRoute = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Typography variant="h2">Loading User Data...</Typography>
+                <Typography variant="h2">Verifing session...</Typography>
             </Box>
         );
     }
 
-    return isLoggedIn ? <Outlet /> : <Navigate to={ROUTES.LOGIN} />;
+    return !isLoggedIn ? <Outlet /> : <Navigate to={ROUTES.HOME} />;
 };
 
-export default ProtectedRoute;
+export default GuestRoute;

@@ -1,9 +1,9 @@
 import { SvgIconTypeMap, Typography } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
-import { UserProfileData } from './UserProfileContent.styles';
+import { UserProfileData } from './DetailItem.styles';
 
-const UserProfileContent = ({
+const DetailItem = ({
     icon: Icon,
     content,
 }: {
@@ -18,4 +18,4 @@ const UserProfileContent = ({
     </UserProfileData>
 );
 
-export default UserProfileContent;
+export default DetailItem;

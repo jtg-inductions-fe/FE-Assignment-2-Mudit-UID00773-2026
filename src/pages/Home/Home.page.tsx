@@ -1,17 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import {
-    Autocomplete,
-    Box,
-    debounce,
-    Typography,
-    useTheme,
-} from '@mui/material';
+import { Autocomplete, Box, Typography, useTheme } from '@mui/material';
 
-import { useGetUsersQuery } from '@app/api/user/userApiSlice';
-import { IUserInfo, UserCard, UserCardSkeleton } from '@components';
+import { UserCard, UserCardSkeleton } from '@components';
+import { useSearchBar } from '@hooks';
 
 import { HomeContainer, SearchBox, SearchBoxContainer } from './Home.styles';
 
@@ -22,6 +16,10 @@ const Home = () => {
 
     const theme = useTheme();
 
+    const { searchBarDebouncer, isFetching, searchUserSample, user } =
+        useSearchBar(data, setData, setSearchParams);
+
+    useEffect(() => () => searchBarDebouncer.clear(), [searchBarDebouncer]);
     useEffect(() => {
         const q = searchParams.get('q');
         if (q) {
@@ -33,28 +31,6 @@ const Home = () => {
         }
     }, [searchParams]);
 
-    const { data: user, isFetching } = useGetUsersQuery(data, {
-        skip: !data || data === '',
-    });
-
-    const debouncer = useMemo(
-        () =>
-            debounce((value: string) => {
-                setData(value);
-                setSearchParams(value ? { q: value } : {});
-            }, 500),
-        [setSearchParams],
-    );
-
-    useEffect(() => () => debouncer.clear(), [debouncer]);
-
-    const sample: IUserInfo[] = Array.from({ length: 5 }).map((_, index) => ({
-        username: '',
-        url: '',
-        profileImage: '',
-        id: index,
-    }));
-
     return (
         <HomeContainer>
             <Typography variant="h1">MEET THE DEVELOPERS</Typography>
@@ -65,12 +41,12 @@ const Home = () => {
                 <Autocomplete
                     freeSolo
                     disablePortal
-                    options={(isFetching ? sample : user) || []}
+                    options={(isFetching ? searchUserSample : user) || []}
                     open={Boolean(data)}
                     value={searchContent}
                     onInputChange={(_event, newInputValue) => {
                         setSearchContent(newInputValue);
-                        debouncer(newInputValue);
+                        searchBarDebouncer(newInputValue);
                     }}
                     filterOptions={(x) => x}
                     loading={isFetching}

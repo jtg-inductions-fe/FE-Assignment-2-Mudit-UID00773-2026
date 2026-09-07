@@ -8,7 +8,7 @@ import {
     TypographyProps,
 } from '@mui/material';
 
-export const InfoCard = styled(Card)<CardProps>(({ theme }) => ({
+export const InfoCardContainer = styled(Card)<CardProps>(({ theme }) => ({
     display: 'inline-flex',
     alignItems: 'stretch',
     gap: theme.typography.pxToRem(8),

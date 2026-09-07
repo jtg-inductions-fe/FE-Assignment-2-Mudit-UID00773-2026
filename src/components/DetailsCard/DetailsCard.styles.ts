@@ -91,7 +91,7 @@ export const ProfileDivider = styled(Divider)(({ theme: { breakpoints } }) => ({
     },
 }));
 
-export const UserProfileInfoCardContainer = styled(Box)<BoxProps>(
+export const InfoCardContainer = styled(Box)<BoxProps>(
     ({ theme: { breakpoints, typography } }) => ({
         display: 'flex',
         gap: typography.pxToRem(20),
@@ -103,7 +103,7 @@ export const UserProfileInfoCardContainer = styled(Box)<BoxProps>(
     }),
 );
 
-export const UserProfileInfoCardSkeleton = styled(Skeleton)<SkeletonProps>(
+export const InfoCardSkeleton = styled(Skeleton)<SkeletonProps>(
     ({ theme: { typography, breakpoints } }) => ({
         width: typography.pxToRem(160),
         height: typography.pxToRem(70),

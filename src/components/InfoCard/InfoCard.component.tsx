@@ -2,13 +2,13 @@ import { Divider, SvgIconTypeMap, Typography } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 import {
-    InfoCard,
+    InfoCardContainer,
     InfoCardHeading,
     InfoCardIconContainer,
     InfoCardSection,
-} from './UserProfileInfoCard.styles';
+} from './InfoCard.styles';
 
-const UserProfileInfoCard = ({
+const InfoCard = ({
     icon: Icon,
     heading,
     content,
@@ -19,7 +19,7 @@ const UserProfileInfoCard = ({
     heading: string;
     content: number;
 }) => (
-    <InfoCard elevation={3}>
+    <InfoCardContainer elevation={3}>
         <InfoCardIconContainer>
             <Icon />
         </InfoCardIconContainer>
@@ -30,7 +30,7 @@ const UserProfileInfoCard = ({
             </InfoCardHeading>
             <Typography>{content}</Typography>
         </InfoCardSection>
-    </InfoCard>
+    </InfoCardContainer>
 );
 
-export default UserProfileInfoCard;
+export default InfoCard;
