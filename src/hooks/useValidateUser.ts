@@ -20,7 +20,7 @@ export const useValidateUser = () => {
     const [triggerLoginQuery, { isLoading, isFetching }] =
         useLazyGetUserInfoFromTokenQuery();
 
-    const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
+    const onLoginSubmit: SubmitHandler<IFormInput> = async (inputData) => {
         const { username, password } = inputData;
 
         try {
@@ -94,7 +94,7 @@ export const useValidateUser = () => {
     const isLoggedIn = useSelector(isAuthenticated);
 
     return {
-        onSubmit,
+        onLoginSubmit,
         isLoading,
         handleLogout,
         userInfoFromRedux,

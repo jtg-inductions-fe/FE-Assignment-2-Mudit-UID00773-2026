@@ -26,7 +26,7 @@ import { IFormInput } from './Login.types';
 
 const Login = () => {
     const theme = useTheme();
-    const { isLoading, onSubmit } = useValidateUser();
+    const { isLoading, onLoginSubmit } = useValidateUser();
 
     const [viewPassword, setViewPassword] = useState(false);
 
@@ -68,7 +68,7 @@ const Login = () => {
 
                     <Box
                         component="form"
-                        onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+                        onSubmit={(e) => void handleSubmit(onLoginSubmit)(e)}
                         display="flex"
                         flexDirection="column"
                         gap={theme.typography.pxToRem(16)}
