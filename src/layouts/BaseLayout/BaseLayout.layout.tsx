@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
-import { CustomizedSnackbars, Navbar } from '@components';
+import { CustomSnackbars, Navbar } from '@components';
 import { useValidateUser } from '@hooks';
 import { getTokenFromLocalStorage } from '@utils';
 
@@ -27,7 +27,7 @@ const BaseLayout = () => {
 
     return (
         <>
-            <CustomizedSnackbars />
+            <CustomSnackbars />
             <Navbar
                 isAuthenticated={isLoggedIn}
                 isFetching={isFetching}

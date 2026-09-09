@@ -2,11 +2,10 @@ import { Box } from '@mui/material';
 import Alert, { AlertColor } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-import { useCustomizedSnackbars } from './CustomizedSnackbars.hooks';
+import { useCustomSnackbars } from './CustomSnackbars.hooks';
 
-const CustomizedSnackbars = () => {
-    const { alertSeverity, handleClose, message, open } =
-        useCustomizedSnackbars();
+const CustomSnackbars = () => {
+    const { alertSeverity, handleClose, message, open } = useCustomSnackbars();
 
     return (
         <Box>
@@ -29,4 +28,4 @@ const CustomizedSnackbars = () => {
     );
 };
 
-export default CustomizedSnackbars;
+export default CustomSnackbars;

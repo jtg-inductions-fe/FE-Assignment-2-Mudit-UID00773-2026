@@ -11,7 +11,7 @@ import {
     selectOpen,
 } from '@app/snackbar/snackbarSlice';
 
-export const useCustomizedSnackbars = () => {
+export const useCustomSnackbars = () => {
     const dispatch = useDispatch();
 
     const open = useSelector(selectOpen);

@@ -20,6 +20,10 @@ export const useValidateUser = () => {
     const [triggerLoginQuery, { isLoading, isFetching }] =
         useLazyGetUserInfoFromTokenQuery();
 
+    /**
+     * This function accepts usename and password in inputData
+     * Triggers the login request and open snack bar for its result
+     */
     const onLoginSubmit: SubmitHandler<IFormInput> = async (inputData) => {
         const { username, password } = inputData;
 
@@ -57,6 +61,10 @@ export const useValidateUser = () => {
         }
     };
 
+    /**
+     * This function is triggered when there is token is present in the local storage
+     * Makes the request for the trigger the login req
+     */
     const autoLoginFromToken = useCallback(
         async (token: string) => {
             try {
@@ -79,6 +87,11 @@ export const useValidateUser = () => {
         [dispatch, triggerLoginQuery],
     );
 
+    /**
+     * This function contains the logic when we log out
+     * dispatch logout reducer , which clears the local storage and redux of the user
+     * Also open snackbar for succesful login
+     */
     const handleLogout = () => {
         dispatch(logOut());
         dispatch(
