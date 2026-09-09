@@ -10,7 +10,7 @@ describe('Navbar Component', () => {
     it('should render properly with logo and login button', () => {
         render(
             <MemoryRouter>
-                <Navbar />
+                <Navbar isAuthenticated={false} isFetching={false} />
             </MemoryRouter>,
         );
 
@@ -26,7 +26,7 @@ describe('Navbar Component', () => {
     it('should change state to logged in and show avatar when login is clicked', async () => {
         render(
             <MemoryRouter>
-                <Navbar />
+                <Navbar isAuthenticated={false} isFetching={false} />
             </MemoryRouter>,
         );
 

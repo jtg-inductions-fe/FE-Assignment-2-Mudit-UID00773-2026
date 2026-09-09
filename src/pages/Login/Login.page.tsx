@@ -1,25 +1,18 @@
-import { useEffect, useState } from 'react';
-
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { Controller, useForm } from 'react-hook-form';
 
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
     Box,
     Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
     InputAdornment,
     Typography,
     useTheme,
 } from '@mui/material';
 
-import { useLazyLoginQuery } from '@app/api/auth/authApiSlice';
-import { setCredentials } from '@app/auth/authSlice';
+import { useValidateUser } from '@hooks';
 
 import {
     IconContainer,
@@ -27,55 +20,13 @@ import {
     LoginContainer,
     LoginInput,
 } from './Login.styles';
-
-interface IFormInput {
-    username: string;
-    password: string;
-}
+import { IFormInput } from './Login.types';
 
 const Login = () => {
     const theme = useTheme();
 
-    const navigate = useNavigate();
-
-    const dispatch = useDispatch();
-    const isAuthenticated = useSelector(
-        (state: { auth: { isAuthenticated: boolean } }) =>
-            state.auth.isAuthenticated,
-    );
-
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [dialogErrorMessage, setDialogErrorMessage] = useState('');
-
-    const [triggerLoginQuery] = useLazyLoginQuery();
-
-    const onSubmit: SubmitHandler<IFormInput> = async (inputData) => {
-        const { username, password } = inputData;
-
-        try {
-            const response = await triggerLoginQuery(password).unwrap();
-
-            if (response && response?.username !== username) {
-                setDialogErrorMessage('Invalid Username');
-                setDialogOpen(true);
-                return;
-            }
-
-            dispatch(setCredentials({ user: response, token: password }));
-        } catch (error) {
-            if (error && typeof error === 'object' && 'error' in error) {
-                setDialogErrorMessage(String(error?.error));
-            } else {
-                setDialogErrorMessage('Something went worng');
-            }
-            setDialogOpen(true);
-        }
-    };
-
-    const handleDialogClose = () => {
-        setDialogErrorMessage('');
-        setDialogOpen(false);
-    };
+    const { viewPassword, toggleViewPassword, isLoading, onLoginSubmit } =
+        useValidateUser();
 
     const {
         control,
@@ -85,32 +36,8 @@ const Login = () => {
         defaultValues: { username: '', password: '' },
     });
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            void navigate('/');
-        }
-    }, [navigate, isAuthenticated]);
-
     return (
         <>
-            <Dialog
-                open={dialogOpen}
-                onClose={handleDialogClose}
-                fullWidth
-                PaperProps={{
-                    style: { background: theme.palette.background.default },
-                }}
-            >
-                <DialogTitle>Error during Login</DialogTitle>
-                <DialogContent>
-                    <Typography>{dialogErrorMessage}</Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" onClick={handleDialogClose}>
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
             <LoginContainer>
                 <LoginCard elevation={4}>
                     <Box>
@@ -125,19 +52,19 @@ const Login = () => {
                             fontSize={theme.typography.pxToRem(24)}
                             fontWeight="bold"
                         >
-                            Login Page
+                            Login
                         </Typography>
                         <Typography
                             component="p"
                             marginTop={theme.typography.pxToRem(12)}
                         >
-                            Login to get more features
+                            Ready to get started? Log in below
                         </Typography>
                     </Box>
 
                     <Box
                         component="form"
-                        onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+                        onSubmit={(e) => void handleSubmit(onLoginSubmit)(e)}
                         display="flex"
                         flexDirection="column"
                         gap={theme.typography.pxToRem(16)}
@@ -179,7 +106,7 @@ const Login = () => {
                                     {...field}
                                     label="Password"
                                     variant="outlined"
-                                    type="password"
+                                    type={viewPassword ? 'text' : 'password'}
                                     error={Boolean(errors?.password)}
                                     helperText={
                                         errors?.password
@@ -193,13 +120,37 @@ const Login = () => {
                                                     <LockIcon />
                                                 </InputAdornment>
                                             ),
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    {viewPassword ? (
+                                                        <VisibilityOffIcon
+                                                            cursor="pointer"
+                                                            onClick={
+                                                                toggleViewPassword
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <VisibilityIcon
+                                                            cursor="pointer"
+                                                            onClick={
+                                                                toggleViewPassword
+                                                            }
+                                                        />
+                                                    )}
+                                                </InputAdornment>
+                                            ),
                                         },
                                     }}
                                 />
                             )}
                         />
-                        <Button type="submit" variant="contained" fullWidth>
-                            Login
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Logging in...' : 'Login'}
                         </Button>
                     </Box>
                 </LoginCard>

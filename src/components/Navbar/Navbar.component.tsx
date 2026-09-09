@@ -1,43 +1,34 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { Avatar, Box, Button, Toolbar } from '@mui/material';
 
-import { logOut, selectUser } from '@app/auth/authSlice';
 import Logo from '@assets/images/Logo.svg';
 import { DropDown } from '@components';
 import { ROUTES } from '@constant';
+import { useDropDownMenu } from '@hooks';
 
-import { LogoImage, MyAppBar, NavItemContainer } from './Navbar.styles';
+import {
+    AvatarSkeleton,
+    LogoImage,
+    MyAppBar,
+    NavItemContainer,
+} from './Navbar.styles';
 
-const Navbar = () => {
+const Navbar = ({
+    isAuthenticated,
+    isFetching,
+    imageUrl,
+    username,
+    handleLogout,
+}: {
+    isAuthenticated: boolean;
+    isFetching: boolean;
+    imageUrl: string | undefined;
+    username: string | undefined;
+    handleLogout: () => void;
+}) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const { pathname } = useLocation();
-
-    const isAuthenticated = useSelector(
-        (state: { auth: { isAuthenticated: boolean } }) =>
-            state.auth.isAuthenticated,
-    );
-
-    const imageUrl = useSelector(selectUser)?.profileImage;
-    const username = useSelector(selectUser)?.username;
-
-    const handleLogout = () => {
-        dispatch(logOut());
-
-        if (pathname === '/' + ROUTES.MY_PROFILE) void navigate(ROUTES.LOGIN);
-    };
-
-    const menuOptions = [
-        {
-            label: 'View Profile',
-            onClick: () => void navigate(ROUTES.MY_PROFILE),
-        },
-        { label: 'Logout', onClick: () => handleLogout() },
-    ];
+    const { menuOptions } = useDropDownMenu(handleLogout);
 
     return (
         <MyAppBar position="fixed" elevation={10}>
@@ -49,7 +40,9 @@ const Navbar = () => {
                 </Box>
 
                 <NavItemContainer>
-                    {isAuthenticated ? (
+                    {isFetching ? (
+                        <AvatarSkeleton variant="circular" />
+                    ) : isAuthenticated ? (
                         <DropDown items={menuOptions}>
                             <Avatar alt={username} src={imageUrl} />
                         </DropDown>

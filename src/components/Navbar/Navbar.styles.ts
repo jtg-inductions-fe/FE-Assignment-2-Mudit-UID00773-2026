@@ -1,6 +1,13 @@
 import { LinkProps as RouterLinkProps } from 'react-router-dom';
 
-import { AppBar, Link, LinkProps, styled } from '@mui/material';
+import {
+    AppBar,
+    Link,
+    LinkProps,
+    Skeleton,
+    SkeletonProps,
+    styled,
+} from '@mui/material';
 
 export const MyAppBar = styled(AppBar)(
     ({ theme: { spacing, breakpoints, palette, typography } }) => ({
@@ -35,3 +42,16 @@ export const NavItemContainer = styled(Link)<NavItemContainerProps>(() => ({
     alignItems: 'stretch',
     width: 'fit-content',
 }));
+
+export const AvatarSkeleton = styled(Skeleton)<SkeletonProps>(
+    ({
+        theme: {
+            palette,
+            typography: { pxToRem },
+        },
+    }) => ({
+        backgroundColor: palette.grey[300],
+        height: pxToRem(40),
+        width: pxToRem(40),
+    }),
+);
