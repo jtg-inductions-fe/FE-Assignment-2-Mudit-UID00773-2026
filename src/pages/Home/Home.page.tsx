@@ -1,7 +1,3 @@
-import { useEffect, useState } from 'react';
-
-import { useSearchParams } from 'react-router-dom';
-
 import { Autocomplete, Box, Typography, useTheme } from '@mui/material';
 
 import { UserCard, UserCardSkeleton } from '@components';
@@ -10,26 +6,17 @@ import { useSearchBar } from '@hooks';
 import { HomeContainer, SearchBox, SearchBoxContainer } from './Home.styles';
 
 const Home = () => {
-    const [searchContent, setSearchContent] = useState('');
-    const [data, setData] = useState('');
-    const [searchParams, setSearchParams] = useSearchParams();
-
     const theme = useTheme();
 
-    const { searchBarDebouncer, isFetching, searchUserSample, user } =
-        useSearchBar(data, setData, setSearchParams);
-
-    useEffect(() => () => searchBarDebouncer.clear(), [searchBarDebouncer]);
-    useEffect(() => {
-        const q = searchParams.get('q');
-        if (q) {
-            setSearchContent(q);
-            setData(q);
-        } else {
-            setSearchContent('');
-            setData('');
-        }
-    }, [searchParams]);
+    const {
+        searchBarDebouncer,
+        isFetching,
+        searchUserSample,
+        user,
+        data,
+        searchContent,
+        setSearchContent,
+    } = useSearchBar();
 
     return (
         <HomeContainer>

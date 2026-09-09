@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Controller, useForm } from 'react-hook-form';
 
 import LockIcon from '@mui/icons-material/Lock';
@@ -26,11 +24,9 @@ import { IFormInput } from './Login.types';
 
 const Login = () => {
     const theme = useTheme();
-    const { isLoading, onLoginSubmit } = useValidateUser();
 
-    const [viewPassword, setViewPassword] = useState(false);
-
-    const toggleViewPassword = () => setViewPassword((prev) => !prev);
+    const { viewPassword, toggleViewPassword, isLoading, onLoginSubmit } =
+        useValidateUser();
 
     const {
         control,

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { IFormInput } from 'pages/Login/Login.types';
 import { SubmitHandler } from 'react-hook-form';
@@ -93,6 +93,10 @@ export const useValidateUser = () => {
 
     const isLoggedIn = useSelector(isAuthenticated);
 
+    const [viewPassword, setViewPassword] = useState(false);
+
+    const toggleViewPassword = () => setViewPassword((prev) => !prev);
+
     return {
         onLoginSubmit,
         isLoading,
@@ -101,5 +105,7 @@ export const useValidateUser = () => {
         autoLoginFromToken,
         isFetching,
         isLoggedIn,
+        toggleViewPassword,
+        viewPassword,
     };
 };

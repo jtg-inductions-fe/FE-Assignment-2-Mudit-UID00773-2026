@@ -1,17 +1,17 @@
-import { Dispatch, SetStateAction, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { SetURLSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { debounce } from '@mui/material';
 
 import { useGetUsersQuery } from '@app/api/user/userApiSlice';
 import { IUserInfo } from '@components';
 
-export const useSearchBar = (
-    data: string,
-    setData: Dispatch<SetStateAction<string>>,
-    setSearchParams: SetURLSearchParams,
-) => {
+export const useSearchBar = () => {
+    const [searchContent, setSearchContent] = useState('');
+    const [data, setData] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const { data: user, isFetching } = useGetUsersQuery(data, {
         skip: !data || data === '',
     });
@@ -33,5 +33,25 @@ export const useSearchBar = (
         }),
     );
 
-    return { user, isFetching, searchBarDebouncer, searchUserSample };
+    useEffect(() => () => searchBarDebouncer.clear(), [searchBarDebouncer]);
+    useEffect(() => {
+        const q = searchParams.get('q');
+        if (q) {
+            setSearchContent(q);
+            setData(q);
+        } else {
+            setSearchContent('');
+            setData('');
+        }
+    }, [searchParams]);
+
+    return {
+        searchContent,
+        setSearchContent,
+        user,
+        data,
+        isFetching,
+        searchBarDebouncer,
+        searchUserSample,
+    };
 };
